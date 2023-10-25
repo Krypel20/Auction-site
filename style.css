@@ -1,0 +1,75 @@
+/* style.css */
+
+/* Resetowanie domyślnych stylów przeglądarki */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Styl nagłówka */
+header {
+    background-color: #ffea00;
+    color: #000000;
+}
+
+.navbar {
+    font-size: 20px;
+    display: flex;
+    font-weight: bold;
+    justify-content: flex-end;
+    padding: 20px; /* Marginesy z lewej i prawej strony */
+}
+.navbar a {
+    color: #000000;
+    text-decoration: none;
+    margin-right: 20px;
+}
+.navbar a:hover {
+    color: #ff0000;
+}
+
+.container {
+    display: flex;
+    margin: 0 10%; /* Marginesy na bokach (po 7.5%) */
+}
+
+/* Styl obszaru contentu */
+.content {
+    background-color: #ececec;
+    flex: 0 0 82%; /* Szerokość 65% bez elastyczności */
+    padding: 30px;
+    justify-content: center; /* Wyśrodkowanie treści */
+
+}
+
+.section {
+    margin-right: 20px; /* Mniejszy margines między sekcjami */
+}
+
+.page-card {
+    padding: 20px;
+    
+}
+
+.sidebar {
+    flex: 0 0 11%; /* Szerokość 20% bez elastyczności */
+    background-color: #dbdbdb;
+    padding: 20px;
+    border-left: solid 2px;
+}
+.sidebar li{
+    padding: 5px;
+}
+
+/* Styl stopki */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}

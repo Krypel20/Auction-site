@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Okno Logowania</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="css/loginRegisterForm.css">
 </head>
 <body>
     <div class="login-container">
-        <form class="login-form">
+        <form action="$includes/formhandler.inc.php" class="login-form", method="post">
             <h1>Logowanie</h1>
             <div class="input-group">
                 <label for="email">E-mail</label>
@@ -20,7 +20,7 @@
             </div>
             <button type="submit">Zaloguj się</button>
             <a href="#" class="reset-password">Zapomniałeś hasła?</a>
-            <a href="register.html" class="register-link">Zarejestruj się</a>
+            <a href="register.php" class="register-link">Zarejestruj się</a>
         </form>
     </div>
 </body>

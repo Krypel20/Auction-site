@@ -48,14 +48,27 @@ input {
 }
 
 button {
-    font-size: 14px;
-    width: 100%;
+    font-size: 15px;
+    width: 35%;
     padding: 10px;
     background-color: #ffea00;
     color: #000000;
     border: solid 2px;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
+}
+
+.form-error{
+    margin-top: 0;
+    font-size: 15px;
+    color: red;
+    font-weight: bold;
+}
+.form-success{
+    margin-top: 0;
+    font-size: 15px;
+    color: green;
     font-weight: bold;
 }
 

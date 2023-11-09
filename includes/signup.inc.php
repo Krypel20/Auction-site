@@ -44,28 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die();
         }
 
-        create_user($pdo, $username, $pwd, $email);
-
+        create_user($pdo, $username, $pwd, $email); //wysłanie prawidłowych danych do bazy danych
         header("Location: ../register.php?signup=success");
 
         $pdo = null;
         $stmt = null;
-
         die();
-        // $query = "INSERT INTO users (username, pwd, email) VALUES (:username, :pwd, :email);";
-    
-        // $stmt = $pdo->prepare($query);
-    
-        // $stmt->bindParam(":username", $username);
-        // $stmt->bindParam(":pwd", $pwd);
-        // $stmt->bindParam(":email", $email);
-    
-        // $stmt->execute();
-    
-        // $pdo = null;
-        // $stmt = null;
-        // header("Location: ../index.php");
-        // die();
+
     } catch (PDOException $e) {
         die("Query failed: " . $e->getMessage());
     }    
@@ -73,4 +58,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../register.php");
     exit();
 }
-?>

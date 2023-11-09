@@ -1,3 +1,8 @@
+<?php 
+    require_once "includes/config_session.inc.php";
+    require_once "includes/login_view.inc.php";
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,7 +13,7 @@
 </head>
 <body>
     <div class="login-container">
-        <form action="$includes/formhandler.inc.php" class="login-form", method="post">
+        <form action="includes/login.inc.php" class="login-form", method="post">
             <h1>Logowanie</h1>
             <div class="input-group">
                 <label for="email">E-mail</label>
@@ -16,8 +21,11 @@
             </div>
             <div class="input-group">
                 <label for="password">Hasło</label>
-                <input type="password" id="password" name="password" placeholder="Twoje hasło" required>
+                <input type="password" id="password" name="pwd" placeholder="Twoje hasło" required>
             </div>
+            <?php 
+                //check_login_errors();
+            ?>
             <button type="submit">Zaloguj się</button>
             <a href="#" class="reset-password">Zapomniałeś hasła?</a>
             <a href="register.php" class="register-link">Zarejestruj się</a>

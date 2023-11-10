@@ -3,7 +3,9 @@
     require_once "includes/login_view.inc.php";
     
     if(isset($_SESSION['user_id'])){
-        header('location:index.php');
+        $time = new DateTime();
+        $newtime = $time->Modify("+2 seconds");
+        header("location:index.php");
     }
 ?>
 
@@ -37,7 +39,6 @@
                     <a href="register.php" class="register-link">Zarejestruj się</a>';
                 }
             ?>
-        </form>
     </div>
 </body>
 </html>

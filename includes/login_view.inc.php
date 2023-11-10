@@ -23,6 +23,6 @@ function check_login_errors()
         unset($_SESSION['errors_login']);
     }else if(isset($_GET["login"]) && $_GET["login"]==="success"){
         echo '<p class="form-success">Pomyślnie zalogowano!</p></br>
-        <a id="link" href="index.php?login=success">Wróć na stronę główną</a>';
+        <a id="link" href="index.php">Powrót na stronę główną</a>';
     }
 }

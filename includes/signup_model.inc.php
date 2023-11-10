@@ -29,13 +29,13 @@ function set_user(object $pdo, string $username, string $pwd, string $email)
     $query = "INSERT INTO users (username, pwd, email) VALUES (:username, :pwd, :email);";
     $stmt = $pdo->prepare($query);
 
-    // $options = [
-    //     'cost' => 12
-    // ];
-    //$hashedPwd= password_hash($pwd, PASSWORD_BCRYPT, $options); //kryptowanie hasla przy uzyciu algorytmu PASSWORD_BCRYPT
+    $options = [
+        'cost' => 12
+    ];
+    $hashedPwd= password_hash($pwd, PASSWORD_BCRYPT, $options); //kryptowanie hasla przy uzyciu algorytmu PASSWORD_BCRYPT
 
     $stmt->bindParam(":username", $username);
-    $stmt->bindParam(":pwd", $pwd); //kryptowane haslo: $stmt->bindParam(":pwd", $hashedPwd);
+    $stmt->bindParam(":pwd", $hashedPwd);; //kryptowane haslo
     $stmt->bindParam(":email", $email);
     $stmt->execute();
 }

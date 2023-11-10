@@ -2,10 +2,29 @@
 declare(strict_types=1);
 //funkcje odpowiedzialne za kontrolę formularza
 
-function login_user(string $pwd, string $email){
-    if(search_user($email, $pwd)){
+function is_input_empty( string $pwd, string $email)
+{
+    if(empty($pwd) || empty($email)){
         return true;
     }else{
-        return false;
+        return false; 
+    }
+}
+
+function is_email_wrong(bool|array $result)
+{
+    if(!$result){
+        return true;
+    }else{
+        return false; 
+    }
+}
+
+function is_password_wrong(string $pwd, string$hashedPwd)
+{
+    if(!password_verify($pwd, $hashedPwd)){
+        return true;
+    }else{
+        return false; 
     }
 }

@@ -1,0 +1,52 @@
+.profile-header{
+    background-color: rgb(166, 166, 166);
+    min-height: 300px;
+    max-width: 900px;
+    display: flex;
+    margin: auto;
+    margin-top: 50px;
+    align-items: flex-end;
+    position: relative;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.4);
+    outline: 1px solid black;
+    border-bottom: rgb(255, 247, 0) inset 10px;
+}
+.profile-picture{
+   height: 125px;
+   width: 125px; 
+   background-color: white;
+   display: flex;
+   margin: 20px;
+   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+   border: groove 4px rgb(0, 0, 0);
+   border-style:outset;
+}
+.profile-info{
+    background-color: rgb(230, 230, 230);
+    min-height: 300px;
+    max-width: 900px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    margin: auto;
+    margin-bottom: 50px;
+    display: grid;
+    position:relative;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom:1px solid;
+}
+.current-auctions{
+    background-color: aliceblue;
+    min-height: fit-content;
+    min-width: 800px;
+    margin:auto;
+    display: flex;
+    border: 1px solid black;
+}
+.auctions-history{
+    background-color: aliceblue;
+    min-height: fit-content;
+    min-width: 800px;
+    margin:auto;
+    display: flex;
+    border: 1px solid black;
+}

@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+function is_user_logged_in()
+{
+    if(isset($_SESSION['user_id'])){
+        $time = new DateTime();
+        $newtime = $time->Modify("+2 seconds");
+        header("location:index.php");
+    }
+}
+
 function output_username()
 {
     if(isset($_SESSION["user_id"])){
@@ -24,5 +33,14 @@ function check_login_errors()
     }else if(isset($_GET["login"]) && $_GET["login"]==="success"){
         echo '<p class="form-success">Pomyślnie zalogowano!</p></br>
         <a id="link" href="index.php">Powrót na stronę główną</a>';
+    }
+}
+
+function media_if_not_logged_in()
+{
+    if(!isset($_SESSION["user_id"])){
+        echo '<button type="submit">Zaloguj się</button>
+        <a href="#" class="reset-password">Zapomniałeś hasła?</a>
+        <a href="register.php" class="register-link">Zarejestruj się</a>';
     }
 }

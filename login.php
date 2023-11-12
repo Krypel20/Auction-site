@@ -2,11 +2,7 @@
     require_once "includes/config_session.inc.php";
     require_once "includes/login_view.inc.php";
     
-    if(isset($_SESSION['user_id'])){
-        $time = new DateTime();
-        $newtime = $time->Modify("+2 seconds");
-        header("location:index.php");
-    }
+    is_user_logged_in()
 ?>
 
 <!DOCTYPE html>
@@ -33,11 +29,7 @@
             </div>
             <?php 
                 check_login_errors();
-                if(!isset($_SESSION["user_id"])){
-                    echo '<button type="submit">Zaloguj się</button>
-                    <a href="#" class="reset-password">Zapomniałeś hasła?</a>
-                    <a href="register.php" class="register-link">Zarejestruj się</a>';
-                }
+                media_if_not_logged_in();
             ?>
     </div>
 </body>

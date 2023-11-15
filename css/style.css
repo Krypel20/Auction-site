@@ -52,7 +52,7 @@ body{
 
 
 .title-header{
-    width: min(100%, 3840px);
+    width: auto;
     font-size: clamp(16px, 2vw,24px);
     color:rgb(25, 25, 25);
     background-color: rgb(234, 234, 234);
@@ -60,6 +60,7 @@ body{
     pointer-events: none;
     font-family: Verdana, sans-serif;
     font-weight: bold;
+    justify-content:center;
     text-align: center;
     align-content: center;
 }

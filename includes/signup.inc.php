@@ -33,19 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if($errors){
             $_SESSION["errors_signup"] = $errors; //wyświetlanie informacji o błędach
-
-            // $signupData = [                    //zapamiętanie wpisanych danych w przypadku gdy wyskoczy błąd 
-            //     "username" => $username,
-            //     "email" => $email
-            // ];
-            // $_SESSION["signup_data"] = $signupData;
-
-            header("Location: ../register.php");
+            header("Location: ../signup.php");
             die();
         }
 
         create_user($pdo, $username, $pwd, $email); //wysłanie prawidłowych danych do bazy danych
-        header("Location: ../register.php?signup=success");
+        header("Location: ../signup.php?signup=success");
 
         $pdo = null;
         $stmt = null;

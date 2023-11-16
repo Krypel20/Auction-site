@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auction House</title>
-    <link rel="stylesheet" type="text/css" href="css/user_page.css">
+    <link rel="stylesheet" type="text/css" href="css/createAuction.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -37,39 +37,36 @@
         </nav>
     </header>
 <div class="create-auction-form">
-<form action="includes/createAuction.inc.php" class="create-auction-form" method="post">
-    <h1>Tworzenie aukcji</h1>
-    <label for="itemName">Nazwa Przedmiotu:</label>
-    <input type="text" name="itemName" id="itemName" required>
-    <br>
+    <form action="includes/createAuction.inc.php" class="create-auction" method="post">
+        <h1>Tworzenie aukcji</h1>
+        <label for="itemName">Nazwa Przedmiotu:</label>
+        <input type="text" name="itemName" id="itemName" required>
+        <br>
 
-    <label for="category">Cena Wywoławcza:</label>
-    <select name="category" id="category">
-        <?php
-            foreach ($categories as $category) {
-                echo "<option value=\"{$category['categoryId']}\">{$category['categoryName']}</option>";
-            }
-        ?>
-    </select>
-    <br>
+        <label for="category">Kategoria:</label>
+        <select name="category" id="category">
+            <?php
+                foreach ($categories as $category) {
+                    echo "<option value=\"{$category['categoryId']}\">{$category['categoryName']}</option>";
+                }
+            ?>
+        </select>
+        <br>
+        <label for="description">Opis:</label>
+        <textarea name="description" id="description" rows="4" required></textarea>
 
-    <label for="description">Opis:</label>
-    <textarea name="description" id="description" rows="4" required></textarea>
-    <br>
+        <label for="endDate">Planowana Data Zakończenia:</label>
+        <input type="datetime-local" name="end_date" id="end_date" required>
 
-    <label for="endDate">Planowana Data Zakończenia:</label>
-    <input type="datetime-local" name="end_date" id="end_date" required>
-    <br>
+        <label for="askingPrice">Cena Wywoławcza:</label>
+        <input type="number" name="asking_price" id="asking_price" step="0.01" required>
+        <br>
 
-    <label for="asking_price">Cena Wywoławcza:</label>
-    <input type="number" name="asking_price" id="asking_price" step="0.01" required>
-    <br>
-
-    <label for="picture">Dodaj Zdjęcie:</label>
-    <input type="file" name="picture" id="picture" accept="image/*">
-    <br>
-    <input type="submit" value="Dodaj Aukcję">
-</form>
+        <label for="picture">Dodaj Zdjęcie:</label>
+        <input type="file" name="picture" id="picture" accept="image/*">
+        <br>
+        <button type="submit">Dodaj aukcje</button>
+    </form>
 </div>
     <footer class="footer">
         Piotr Krypel <br>

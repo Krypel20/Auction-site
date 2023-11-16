@@ -41,6 +41,6 @@ function media_if_not_logged_in()
     if(!isset($_SESSION["user_id"])){
         echo '<button type="submit">Zaloguj się</button>
         <a href="#" class="reset-password">Zapomniałeś hasła?</a>
-        <a href="register.php" class="register-link">Zarejestruj się</a>';
+        <a href="singup.php" class="register-link">Zarejestruj się</a>';
     }
 }

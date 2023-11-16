@@ -1,0 +1,48 @@
+.create-auction-form{
+    display: grid;
+    margin: auto;
+    max-width: 70%;
+    min-width: 60%;
+    padding: 10px;
+}
+
+#description, #category, #endDate, #askingPrice, #picture{
+    margin-top: 5px;
+}
+
+textarea{
+    min-width: 80%;
+    margin: 5px;
+    width: 80%;
+    padding: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    padding: 5px;
+}
+
+input, select {
+    display: inline-block;
+    justify-items: center;
+    margin: 5px;
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    font-size: 15px;
+    padding: 10px;
+    padding-left: clamp(15px,5vw,35px);
+    padding-right: clamp(15px,5vw,35px);
+    background-color: #ffea00;
+    color: #000000;
+    border: solid 1px #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin:20px;
+
+}

@@ -1,6 +1,6 @@
 html {
     font-family: Arial, sans-serif;
-    font-size: 18px;
+    font-size: 15px;
 }
 body{
     margin: 0;
@@ -11,6 +11,7 @@ body{
 /* RESPONSYWNOŚC STRONY - Utwórz zmienne tj. navbar-padding, navbar-font-size, navbar-a-margin, header-font-size itd. */
 
 .navbar {
+    display: grid;
     background-color: #f0c000;
     font-size: clamp(15px,2vw,19px);
     display: flex;
@@ -45,11 +46,6 @@ body{
 .loggedin a{
     margin-right: clamp(10px,1vw,20px);
 }
-/* .hello-text {
-    margin-right: 20px;
-    pointer-events: none;
-} */
-
 
 .title-header{
     width: auto;
@@ -80,14 +76,15 @@ body{
 }
 
 .container{
+    display: flex;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
     padding-top: 20px; 
     padding-bottom: 20px;
     background-color: rgb(243, 243, 243);
     min-width: 100%;
+    min-height: 100%;
     height: auto;
     width: auto;
-    display: flex;
     justify-content:center;
 }
 .box {
@@ -111,9 +108,8 @@ body{
     font-size: 20px;
 }
 .footer {
-    font-size: small;
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 10px;
+    padding: 20px;
 }

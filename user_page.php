@@ -16,25 +16,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <nav class="loggedout">
-                <a href="index.php">Strona główna</a>
-                <a href="#">Ostatnie Aukcje</a>
-                <a href="#">Polityka prywatności</a>
-            </nav>
-            <nav class="loggedin">
-                <?php
-                    if(isset($_SESSION["user_id"])){
-                        //echo '<a class="hello-text">Witaj ' . $_SESSION ["user_username"] .'!</a>';
-                        echo "<a href='user_page.php'>Profil</a>";
-                        echo "<a href='create_auction.php'>Stwórz aukcje</a>";
-                        echo "<a href='includes/logout.inc.php'>Wyloguj</a>";
-                    }else{
-                        echo "<a href='login.php'>Logowanie</a>";
-                    }
-                ?>
-            </nav>
-        </nav>
+        <?php include 'includes/nav.php' ?>
         <div class="profile-header">
             <div class="profile-picture"><?php //get profile picture from db?></div>
             <p id="user-name"> </p>
@@ -44,10 +26,7 @@
     <p class="current-auctions"> Udział w aktualnych aukcjach licytowane/sprzedawane</p>
     <p class="auctions-history"> Historia sprzedanych/kupionych przedmiotów</p>
 </div>
-    <footer class="footer">
-        Piotr Krypel <br>
-        <p>&copy; 2023. Wszelkie prawa zastrzeżone</p>
-    </footer>
+    <?php include 'includes/footer.php' ?>
 </body>
 </html>
 

@@ -1,6 +1,24 @@
 <?php
 declare(strict_types= 1);
 
+$categories = [
+    'Zdrowie i Uroda',
+    'Telefony i Akcesoria',
+    'Sztuka',
+    'Sprzęt AGD',
+    'Sport i Fitness',
+    'Motoryzacja',
+    'Moda',
+    'Meble',
+    'Książki i Edukacja',
+    'Instrumenty Muzyczne',
+    'Gry i Konsole',
+    'Fotografia',
+    'Elektronika',
+    'Dom i Ogród',
+    'Biżuteria i Zegarki',
+];
+
 function is_user_logged_in() 
 {
     if(!isset($_SESSION['user_id'])){

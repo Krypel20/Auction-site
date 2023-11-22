@@ -13,24 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <nav class="loggedout">
-                <a href="index.php">Strona główna</a>
-                <a href="#">Polityka prywatności</a>
-            </nav>
-            <nav class="loggedin">
-                <?php
-                    if(isset($_SESSION["user_id"])){
-                        //echo '<a class="hello-text">Witaj ' . $_SESSION ["user_username"] .'!</a>';
-                        echo "<a href='user_page.php'>Profil</a>";
-                        echo "<a href='create_auction.php'>Stwórz aukcje</a>";
-                        echo "<a href='includes/logout.inc.php'>Wyloguj</a>";
-                    }else{
-                        echo "<a href='login.php'>Logowanie</a>";
-                    }
-                ?>
-            </nav>
-        </nav>
+        <?php include 'includes/nav.php' ?>
         <div class="title-header">
             <div class="logo"> <img src="img/AuctionHammer.png" /></div>
             <h1>Auction House PL</h1> 
@@ -38,12 +21,9 @@
         </div>
     </header>
 <div class="container">
-    <div class="box content-box"> <a href="#">Ostatnie Aukcje</a></div>
+    <div class="box content-box"> <a href="present_auctions.php">Ostatnie Aukcje</a></div>
     <div class="box picture-box"> jakaś zawartość</div>
 </div>
-    <footer class="footer">
-        Piotr Krypel <br>
-        <p>&copy; 2023. Wszelkie prawa zastrzeżone</p>
-    </footer>
+    <?php include 'includes/footer.php' ?>
 </body>
 </html>

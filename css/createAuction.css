@@ -5,69 +5,75 @@ h1{
     font-size: clamp(25px,1vw,40px);
 }
 
-
 .create-auction-container{
-    width: 525px;
+    width: 550px;
     height: fit-content;
     background-color: #fff;
     border: 1px solid #aaa795;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
+    justify-content: center;
     margin: auto;
     margin-top: 50px;
     margin-bottom: 50px;
 }
-
 .create-auction-form {
-    padding: 20px;
+    display: grid;
+    padding: 15px;
+    justify-content: center;
 }
 
-#description, #category, #endDate, #askingPrice, #picture{
-    margin-top: 5px;
+.create-auction-form .first-sector{
+    display: flex;
+    margin: 10px;
+}
+.first-sector input{
+    max-width: 70%;
+}
+.first-sector select{
+    max-width: 80%;
+}
+.column{
+    justify-content: center;
+    text-align: left;
+    max-width: 50%;
+    flex:1;
+}
+
+.create-auction-form .second-sector{
+    width: 100%;
+    justify-content: left;
+    text-align: left;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
 textarea{
-    min-width: 80%;
-    margin: 5px;
-    width: 90%;
-    padding: 10px;
+    width: calc(100% - 45px);
+    padding: 5px;
 }
 
 label {
-    display: block;
     font-weight: bold;
     padding: 5px;
 }
 
 input, select {
-    display: inline-block;
-    justify-items: center;
     margin: 5px;
     width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-#end_date{
-    display: inline-block;
-    align-content: left;
-    justify-content: left;
-    width: 40%;
-}
 
-#asking_price{
-    display: inline-block;
-    align-content: left;
-    justify-content: left;
-    width: 20%;
-}
-
-.create-auction button {
-    display: flex;
+.create-auction-form button {
     font-size: 15px;
-    width: 30%; 
+    max-width: 50%; 
+    min-width: 40%;
     padding: 10px;
+    margin: auto;
     background-color: #ffea00;
     color: #000000;
     border: solid 1px #000000;

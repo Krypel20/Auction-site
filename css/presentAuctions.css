@@ -104,12 +104,13 @@ main .right .auction-left img{
     background-color: #000000; 
 }
 main .right .auction-right .currentPrice{
-    margin-top: 30px;
+    display: inline-block;
     color: darkred;
     font-size: 18px;
     font-weight: bold;
 }
 main .right .auction-right .askingPrice{
+    display: block;
     color: rgb(62, 62, 62);
     font-size: 16px;
     font-weight: bold;
@@ -121,4 +122,11 @@ main .right .auction-right .description{
 
 main .auction-left{
     margin: 10px
+}
+
+main .auction-right button{
+    display: inline-block;
+    margin: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }

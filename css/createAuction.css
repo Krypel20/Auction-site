@@ -7,7 +7,7 @@ h1{
 
 
 .create-auction-container{
-    width: 600px;
+    width: 525px;
     height: fit-content;
     background-color: #fff;
     border: 1px solid #aaa795;
@@ -16,6 +16,7 @@ h1{
     text-align: center;
     margin: auto;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .create-auction-form {

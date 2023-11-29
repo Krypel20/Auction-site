@@ -21,7 +21,7 @@
         </div>
     </header>
 <div class="container">
-    <div class="box content-box"> <a href="present_auctions.php">Ostatnie Aukcje</a></div>
+    <div class="box content-box"> <a href="present_auctions.php">Aktualne aukcje</a></div>
     <div class="box picture-box"> jakaś zawartość</div>
 </div>
     <?php include 'includes/footer.php' ?>

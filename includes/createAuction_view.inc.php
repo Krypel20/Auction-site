@@ -28,17 +28,6 @@ function is_user_logged_in()
     }
 }
 
-function get_categories_from_db(object $pdo) 
-{
-    // Pobieranie wszystkich kategorii z bazy danych
-    $query = "SELECT categoryId, categoryName FROM categories";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $categories;
-}
-
 function check_auction_creation_errors()
 {
     if(isset($_SESSION['errors_signup'])){

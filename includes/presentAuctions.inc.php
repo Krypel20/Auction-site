@@ -15,9 +15,9 @@ function getCategories(object $pdo)
     return $categories;
 }
 
-function getLatestAuctions($pdo, $limit){
+function getLatestAuctions($pdo){
 
-    $query = "SELECT * FROM auctions ORDER BY endDate LIMIT $limit";
+    $query = "SELECT * FROM auctions ORDER BY endDate LIMIT 20";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

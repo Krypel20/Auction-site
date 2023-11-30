@@ -13,6 +13,28 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Nazwa Strony</title>
     <meta http-equiv="refresh" content="100">
+<script>
+  const targetDate = new Date("2023-12-31T23:59:59");
+  function updateTimer() {
+    const currentDate = new Date();
+    const timeDifference = targetDate - currentDate;
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    document.getElementById('timer').innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
+
+    // Aktualizuj co sekundę
+    setTimeout(updateTimer, 1000);
+  }
+
+  // Wywołaj funkcję po załadowaniu strony
+  window.onload = function () {
+    updateTimer();
+  };
+</script>
 </head>
 <body>
     <header>
@@ -55,7 +77,8 @@
                             <p class="description"><?php echo $auction['description'] ?></p>
                             <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
                             <p class="currentPrice">Aktualna cena: <?php if($auction['currentPrice'] == NULL) { echo $auction['askingPrice']; } else { echo $auction['currentPrice']; } ?>zł</p>
-                            <button type="bid">Licytuj</button>
+                            <button type="bid">Licytuj</button> <input type="number" id="new_price" step="1" required></input>
+                            <p id='timer'></p>
                         </div>
                     </div>
                 <?php

@@ -117,16 +117,28 @@ main .right .auction-right .askingPrice{
 }
 main .right .auction-right .description{
     margin-top: 25px;
+    margin-right: 25px;
 }
-
 
 main .auction-left{
     margin: 10px
 }
 
 main .auction-right button{
-    display: inline-block;
     margin: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-left: 20px;
+    width:80px;
+    min-width: fit-content;
+}
+
+main .auction-right #new_price{
+    position: relative;
+    right:10px;
+    width: 85px;
+}
+
+main .auction-right #new_price, button{
+    display: inline-block;
+    border:1px solid black;
+    padding: 5px;
 }

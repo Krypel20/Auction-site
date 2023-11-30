@@ -15,6 +15,13 @@ function getCategories(object $pdo)
     return $categories;
 }
 
+function set_price($pdo, $newprice, $auctionId){
+    $query = "INSERT INTO auctions (currentPrice) VALUES (:newprice);";
+    $stmt = $pdo->prepare($query);
+    
+    $stmt = bindParam(":currentPrice", $newprice);
+}
+
 function getLatestAuctions($pdo){
 
     $query = "SELECT * FROM auctions ORDER BY endDate LIMIT 20";

@@ -15,6 +15,7 @@ function set_auction(object $pdo, string $itemName, string $description, string 
     $stmt->bindParam(":endDate", $endDate);
     $stmt->bindParam(":picture", $picture);
     $stmt->bindParam(":askingPrice", $askingPrice);
+    $stmt->bindParam(":currentPrice", $askingPrice);
     $stmt->bindParam(":category", $category);
     $stmt->execute();
 }

@@ -2,6 +2,7 @@
     
 declare(strict_types= 1);
 //funkcje zmieniajace wyglad strony
+
 function check_signup_errors()
 {
     if(isset($_SESSION['errors_signup'])){

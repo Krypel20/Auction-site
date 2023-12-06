@@ -11,8 +11,7 @@
     <meta name="description" content="Strona aukcyjna, sprzedawaj kupuj i licytuj">
     <link rel="stylesheet" type="text/css" href="css/presentAuctions.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Nazwa Strony</title>
-    <meta http-equiv="refresh" content="100">
+    <title>Dom Aukcyjny</title>
 </head>
 <body>
     <header>
@@ -43,6 +42,9 @@
                 foreach ($auctions as $auction)
                 {
                     $auctionId = $auction['auctionID'];
+                    $sellerId = $auction['userID'];
+                    $currentPrice = $auction['currentPrice'];
+                    $auctioneerId = $auction['auctioneerID'];
                     ?>
                     <div class="auction">
                         <div class="auction-left">
@@ -55,17 +57,25 @@
                             <p class="status"><?php echo $auction['status'] ?></p>
                             <p class="description"><?php echo $auction['description'] ?></p>
                             <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
-                            <p class="currentPrice">Aktualna cena: <?php if($auction['currentPrice'] == NULL) { echo $auction['askingPrice']; } else { echo $auction['currentPrice']; } ?>zł</p>
-                            <button type="button" class="bid-button" data-auction-id="<?php echo $auctionId; ?>">Licytuj</button>
-                            <input type="number" name="new_price" id="new_price" step="1" required></input>
+                            <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice']; ?>zł</p>
+                            <div class='bid-box'>
+                                <button type="button" class="bid-button" 
+                                    data-auction-id="<?php echo $auctionId; ?>" 
+                                    data-seller-id="<?php echo $sellerId; ?>"
+                                    data-current-price="<?php echo $currentPrice; ?>"
+                                    data-current-auctioneer-id="<?php echo $auctioneerId; ?>">Licytuj
+                                </button>
+                                <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $auctionId; ?>" step="1" value="<?php echo $currentPrice + 10; ?>" required></input>
+                                <?php bid_errors(); ?>
+                            </div>
                             <p id='timer'></p>
-                            <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
+                            <div class="message-box" data-auction-id="<?php echo $auction['auctionID']; ?>">
                                 <p>Czy na pewno chcesz zalicytować?</p>
                                 <button class="confirm-yes">Tak</button>
                                 <button class="confirm-no">Nie</button>
                             </div>
-                            <p class='auction_id' style='position: absolute; right: 20px; bottom: 10px;'>id: <?php echo $auctionId; ?></p>
                         </div>
+                        <div class='fog' data-auction-id="<?php echo $auction['auctionID']; ?>"></div>
                     </div>
                 <?php
                 }
@@ -82,19 +92,23 @@
     bidButtons.forEach(function (button, index) {
         button.addEventListener("click", function () {
             var auctionId = button.getAttribute("data-auction-id");
+            var sellerId = button.getAttribute("data-seller-id");
+            var currentPrice = button.getAttribute("data-current-price");
+            var auctioneerId = button.getAttribute('data-current-auctioneer-id');
             var currentMessageBox = document.querySelector(".message-box[data-auction-id='" + auctionId + "']");
+            var currentFog = document.querySelector(".fog[data-auction-id='" + auctionId + "']");
 
             if (currentMessageBox) {
                 currentMessageBox.style.display = "block";
+                currentFog.style.display = 'flex';
 
                 var confirmYesButton = currentMessageBox.querySelector(".confirm-yes");
                 var confirmNoButton = currentMessageBox.querySelector(".confirm-no");
-
-                // Utwórz domknięcie, aby zachować wartość auctionId
                 confirmYesButton.addEventListener("click", function () {
-                    // Zapisanie wartości auctionId przed użyciem w funkcji fetch
                     var auctionIdToSend = auctionId;
-                    var newPriceToSend = document.getElementById("new_price").value;
+                    var auctionSellerId = sellerId;
+                    var currentAuctioneerId = auctioneerId
+                    var newPriceToSend = document.getElementById("new_price_" + auctionId).value;
 
                     // Po potwierdzeniu wywołaj zapytanie Ajax
                     fetch('includes/presentAuctions.inc.php', {
@@ -103,6 +117,9 @@
                             'confirm-licit': '1',
                             'auction_id': auctionIdToSend,
                             'new_price': newPriceToSend,
+                            'seller_id': auctionSellerId,
+                            'auctioneer_id': currentAuctioneerId,
+                            'current_price': currentPrice
                         }),
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -118,10 +135,12 @@
                     });
 
                     currentMessageBox.style.display = "none";
+                    currentFog.style.display = 'none';
                 });
 
                 confirmNoButton.addEventListener("click", function () {
                     currentMessageBox.style.display = "none";
+                    currentFog.style.display = 'none';
                 });
             }
         });

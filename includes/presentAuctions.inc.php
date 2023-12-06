@@ -4,25 +4,43 @@ require_once 'dbh.inc.php';
 require_once "config_session.inc.php";
 //funkcje odpowiedzialne za interakcje z baza danych
 
+//zamien kod tak aby js na stronie dostarczał jedynie id aukcji, 
+//a ponizszy kod pobierał dane z tabeli dla danej aukcji zamiast wysyłać wszystkie dane przez js
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirm-licit"])) {
-    $auctioneerID = $_SESSION["user_id"]; 
+    $newAuctioneerID = $_SESSION["user_id"];
+    $currentAuctioneerID = $_POST['auctioneer_id'];
+    $sellerID = $_POST['seller_id']; 
     $auctionID = $_POST["auction_id"]; 
     $newPrice = floatval($_POST["new_price"]);
-    $currentPrice = floatval($auction['currentPrice']); 
+    $currentPrice = floatval($_POST['current_price']); 
+    // Sprawdzenie błędów
+    $errors = [];
 
-    // Sprawdzenie, czy nowa cena jest większa od aktualnej
-    if ($newPrice > $currentPrice && $auctioneerID) {
-        saveLicitData($pdo, $auctionID, $auctioneerID, $newPrice);
+    if($sellerID==$newAuctioneerID){
+        echo 'Nie możesz zalicytować na własny przedmiot';
+        $errors['invalid_auciton'] = 'Nie możesz zalicytować na własny przedmiot';
+    }
+    elseif($currentAuctioneerID==$newAuctioneerID){
+        echo 'Już licytujesz ten przedmiot';
+        $errors['already_bid'] = 'Już licytujesz ten przedmiot'; 
+    }
+    elseif ($newPrice <= $currentPrice || !is_numeric($newPrice)){
+        echo "Nowa cena musi być większa od aktualnej ($newPrice jest mniejsze od $currentPrice)";
+        $errors['invalid_price'] = 'Za niska wartość licytacji'; 
+    } 
+    else {
+        saveLicitData($pdo, $auctionID, $newAuctioneerID, $newPrice);
         echo "Licytacja udana!";
-    } else {
-        echo "Nowa cena musi być większa od aktualnej.";
     }
 }
 
-function confirmLicit() {
-    // Tutaj można umieścić kod obsługujący potwierdzenie, na przykład wywołanie JavaScript, aby zapytać użytkownika o potwierdzenie
-    // W tym przykładzie zakładamy, że użytkownik zawsze potwierdzi licytację
-    return true;
+function bid_errors(){
+    if(isset($_SESSION['errors_bid'])){
+        $errors = $_SESSION['errors_bid'];
+        echo '<p class="form-error">'. $errors[0] .'</p>';
+        unset($_SESSION['errors_bid']);
+    }
 }
 
 function saveLicitData($pdo, $auctionID, $auctioneerID, $newPrice) {
@@ -36,7 +54,6 @@ function saveLicitData($pdo, $auctionID, $auctioneerID, $newPrice) {
         echo "Błąd bazy danych: " . $e->getMessage();
     }
 }
-
 
 
 function getCategories(object $pdo)

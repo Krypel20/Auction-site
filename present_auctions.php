@@ -13,28 +13,6 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Nazwa Strony</title>
     <meta http-equiv="refresh" content="100">
-<script>
-  const targetDate = new Date("2023-12-31T23:59:59");
-  function updateTimer() {
-    const currentDate = new Date();
-    const timeDifference = targetDate - currentDate;
-
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-    document.getElementById('timer').innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
-
-    // Aktualizuj co sekundę
-    setTimeout(updateTimer, 1000);
-  }
-
-  // Wywołaj funkcję po załadowaniu strony
-  window.onload = function () {
-    updateTimer();
-  };
-</script>
 </head>
 <body>
     <header>
@@ -60,14 +38,15 @@
     </div> 
     <div class="right">         
         <!-- <div class="section-title"></div> -->
-        <?php $auctions = getLatestAuctions($pdo,5)?>
-            <?php 
+        <?php $auctions = getLatestAuctions($pdo);
+
                 foreach ($auctions as $auction)
                 {
+                    $auctionId = $auction['auctionID'];
                     ?>
                     <div class="auction">
                         <div class="auction-left">
-                            <!-- <p class="categoryName"><?php echo $auction['category'] ?></p> -->
+                            <p class="categoryName"><?php echo $auction['category'] ?></p>
                             <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
                         </div>
                         <div class="auction-right">
@@ -77,8 +56,15 @@
                             <p class="description"><?php echo $auction['description'] ?></p>
                             <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
                             <p class="currentPrice">Aktualna cena: <?php if($auction['currentPrice'] == NULL) { echo $auction['askingPrice']; } else { echo $auction['currentPrice']; } ?>zł</p>
-                            <button type="bid">Licytuj</button> <input type="number" id="new_price" step="1" required></input>
+                            <button type="button" class="bid-button" data-auction-id="<?php echo $auctionId; ?>">Licytuj</button>
+                            <input type="number" name="new_price" id="new_price" step="1" required></input>
                             <p id='timer'></p>
+                            <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
+                                <p>Czy na pewno chcesz zalicytować?</p>
+                                <button class="confirm-yes">Tak</button>
+                                <button class="confirm-no">Nie</button>
+                            </div>
+                            <p class='auction_id' style='position: absolute; right: 20px; bottom: 10px;'>id: <?php echo $auctionId; ?></p>
                         </div>
                     </div>
                 <?php
@@ -88,6 +74,60 @@
     </div>
 </main>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var bidButtons = document.querySelectorAll(".bid-button");
+    var messageBoxes = document.querySelectorAll(".message-box");
+
+    bidButtons.forEach(function (button, index) {
+        button.addEventListener("click", function () {
+            var auctionId = button.getAttribute("data-auction-id");
+            var currentMessageBox = document.querySelector(".message-box[data-auction-id='" + auctionId + "']");
+
+            if (currentMessageBox) {
+                currentMessageBox.style.display = "block";
+
+                var confirmYesButton = currentMessageBox.querySelector(".confirm-yes");
+                var confirmNoButton = currentMessageBox.querySelector(".confirm-no");
+
+                // Utwórz domknięcie, aby zachować wartość auctionId
+                confirmYesButton.addEventListener("click", function () {
+                    // Zapisanie wartości auctionId przed użyciem w funkcji fetch
+                    var auctionIdToSend = auctionId;
+                    var newPriceToSend = document.getElementById("new_price").value;
+
+                    // Po potwierdzeniu wywołaj zapytanie Ajax
+                    fetch('includes/presentAuctions.inc.php', {
+                        method: 'POST',
+                        body: new URLSearchParams({
+                            'confirm-licit': '1',
+                            'auction_id': auctionIdToSend,
+                            'new_price': newPriceToSend,
+                        }),
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        credentials: 'include', // Dodane credentials dla przesyłania danych sesji
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Błąd zapytania Ajax:', error);
+                    });
+
+                    currentMessageBox.style.display = "none";
+                });
+
+                confirmNoButton.addEventListener("click", function () {
+                    currentMessageBox.style.display = "none";
+                });
+            }
+        });
+    });
+});
+</script>
     <?php include 'includes/footer.php' ?>
 </body>
 </html>

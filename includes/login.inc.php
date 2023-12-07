@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(is_email_wrong($result)){
             $errors["login_incorrect"] = "Niepoprawne dane logowania!";
         }
-        if(!is_email_wrong( $result) && is_password_wrong($pwd,$result["pwd"])){
+        if(!is_email_wrong($result) && is_password_wrong($pwd,$result["pwd"])){
             $errors["login_incorrect"] = "Niepoprawne dane logowania!";
         }
 

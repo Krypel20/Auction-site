@@ -4,57 +4,57 @@ require_once 'dbh.inc.php';
 require_once "config_session.inc.php";
 //funkcje odpowiedzialne za interakcje z baza danych
 
-//zamien kod tak aby js na stronie dostarczał jedynie id aukcji, 
-//a ponizszy kod pobierał dane z tabeli dla danej aukcji zamiast wysyłać wszystkie dane przez js
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirm-licit"])) {
-    $newAuctioneerID = $_SESSION["user_id"];
-    $currentAuctioneerID = $_POST['auctioneer_id'];
-    $sellerID = $_POST['seller_id']; 
-    $auctionID = $_POST["auction_id"]; 
+    if(!isset($_SESSION["user_id"]))
+    {
+        echo 'Zaloguj się by licytować';
+        die();
+    }else $newAuctioneerID = $_SESSION["user_id"];
+
+    $auctionId = $_POST["auction_id"]; 
     $newPrice = floatval($_POST["new_price"]);
-    $currentPrice = floatval($_POST['current_price']); 
-    // Sprawdzenie błędów
-    $errors = [];
 
-    if($sellerID==$newAuctioneerID){
-        echo 'Nie możesz zalicytować na własny przedmiot';
-        $errors['invalid_auciton'] = 'Nie możesz zalicytować na własny przedmiot';
-    }
-    elseif($currentAuctioneerID==$newAuctioneerID){
-        echo 'Już licytujesz ten przedmiot';
-        $errors['already_bid'] = 'Już licytujesz ten przedmiot'; 
-    }
-    elseif ($newPrice <= $currentPrice || !is_numeric($newPrice)){
-        echo "Nowa cena musi być większa od aktualnej ($newPrice jest mniejsze od $currentPrice)";
-        $errors['invalid_price'] = 'Za niska wartość licytacji'; 
-    } 
-    else {
-        saveLicitData($pdo, $auctionID, $newAuctioneerID, $newPrice);
-        echo "Licytacja udana!";
-    }
-}
-
-function bid_errors(){
-    if(isset($_SESSION['errors_bid'])){
-        $errors = $_SESSION['errors_bid'];
-        echo '<p class="form-error">'. $errors[0] .'</p>';
-        unset($_SESSION['errors_bid']);
-    }
-}
-
-function saveLicitData($pdo, $auctionID, $auctioneerID, $newPrice) {
     try {
-        $stmt = $pdo->prepare("UPDATE auctions SET auctioneerID = :auctioneerID, currentPrice = :currentPrice WHERE auctionID = :auctionID");
-        $stmt->bindParam(':auctionID', $auctionID);
-        $stmt->bindParam(':auctioneerID', $auctioneerID);
-        $stmt->bindParam(':currentPrice', $newPrice);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        echo "Błąd bazy danych: " . $e->getMessage();
-    }
-}
+        require_once "presentAuctions_model.inc.php";
 
+        $result = getAuctionData($pdo, $auctionId);
+
+        if ($result) {
+            // Pobierz dane do nowych zmiennych
+            $currentAuctioneerID = $result['auctioneerID'];
+            $sellerID = $result['userID'];
+            $currentPrice = $result['currentPrice'];
+
+            // Sprawdzenie błędów
+            $errors = [];
+            if($sellerID==$newAuctioneerID){
+                $errors['invalid_auciton'] = 'Nie możesz zalicytować na własny przedmiot';
+            }
+            elseif($currentAuctioneerID==$newAuctioneerID){
+                $errors['already_bid'] = 'Już licytujesz ten przedmiot'; 
+            }
+            elseif ($newPrice <= $currentPrice || !is_numeric($newPrice)){
+                echo "Nowa cena musi być większa od aktualnej ($newPrice jest mniejsze od $currentPrice) ";
+                $errors['invalid_price'] = 'Nowa cena musi być większa od aktualnej '; 
+            } 
+            else {
+                saveLicitData($pdo, $auctionId, $newAuctioneerID, $newPrice);
+                echo "Licytacja udana!";
+            }
+
+            if($errors){
+                $_SESSION["errors_bid"] = $errors; //wyświetlanie informacji o błędach
+                foreach ($errors as $error) echo $error;
+                die();
+            }
+        }else{
+                echo "Nie znaleziono aukcji o ID: $auctionId";
+            }
+    } catch (PDOException $e) {
+        echo "Błąd zapytania SQL: " . $e->getMessage();
+    }
+    exit;
+}
 
 function getCategories(object $pdo)
 {
@@ -68,9 +68,9 @@ function getCategories(object $pdo)
     return $categories;
 }
 
-function getLatestAuctions($pdo){
+function getLatestAuctions(object $pdo){
 
-    $query = "SELECT * FROM auctions ORDER BY endDate LIMIT 20";
+    $query = "SELECT * FROM auctions WHERE endDate >= CURDATE() ORDER BY endDate LIMIT 20";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 
@@ -78,4 +78,24 @@ function getLatestAuctions($pdo){
         $data[] = $row;
     }
     return $data;
+}
+
+function get_seller_name(object $pdo, $userID)
+{
+    $query = "SELECT username FROM users WHERE id = :userID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+    $stmt->execute();
+    $seller_name = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo $seller_name['username'];
+}
+
+function get_auctioneer_name(object $pdo, $auctioneerID)
+{
+    $query = "SELECT username FROM users WHERE id = :auctioneerID";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':auctioneerID', $auctioneerID, PDO::PARAM_INT);
+    $stmt->execute();
+    $seller_name = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo $seller_name['username'];
 }

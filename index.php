@@ -9,20 +9,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nazwa Strony</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
     <header>
         <?php include 'includes/nav.php' ?>
         <div class="title-header">
-            <div class="logo"> <img src="img/AuctionHammer.png" /></div>
-            <h1>Auction House PL</h1> 
+            <div class="logo"> <img src="img/AuctionHammer.png"/></div>
+            <h1>Dom Aukcyjny</h1> 
             Strona poświęcona aukcjom i sprzedaży towarów wartościowych
         </div>
     </header>
 <div class="container">
-    <div class="box content-box"> <a href="present_auctions.php">Aktualne aukcje</a></div>
-    <div class="box picture-box"> jakaś zawartość</div>
+    <div class="content-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod molestie nunc, ac viverra dui venenatis id. Nullam nec ligula vitae arcu mattis ultricies. Sed bibendum sapien at purus lobortis, vel interdum justo volutpat. Suspendisse nec justo ut arcu fermentum feugiat. Proin rhoncus semper mauris, vel efficitur ligula ultrices eu. Integer auctor sapien vel turpis vehicula, ut sollicitudin tortor fringilla. Vivamus gravida tortor eget ligula consequat, ut ullamcorper elit tincidunt. Sed quis eros nec ipsum tincidunt accumsan. In hac habitasse platea dictumst. Quisque quis elit non lectus dignissim euismod.
+    </div>
+    <div class="tiles">
+        <div class="picture-box">
+            <a href="present_auctions.php" class="custom-link" id="Aktualne_aukcje">
+                <img src="img/Latest_auctions.jpg" alt="Latest Auctions">
+                <span class="caption">Aktualne aukcje</span>
+            </a>
+        </div>
+        <div class="picture-box">
+            <a href="present_auctions.php" class="custom-link" id="stworz_aukcje">
+                <img src="img/hammer.jpg" alt="Latest Auctions">
+                <span class="caption">Stwórz aukcje</span>
+            </a>
+        </div>
+    </div>
 </div>
     <?php include 'includes/footer.php' ?>
 </body>

@@ -13,7 +13,8 @@ function getAuctionData(object $pdo, $auctionId){
 
 function saveLicitData(object $pdo, $auctionID, $auctioneerID, $newPrice) {
     try {
-        $stmt = $pdo->prepare("UPDATE auctions SET auctioneerID = :auctioneerID, currentPrice = :currentPrice WHERE auctionID = :auctionID");
+        $query = "UPDATE auctions SET auctioneerID = :auctioneerID, currentPrice = :currentPrice WHERE auctionID = :auctionID";
+        $stmt = $pdo->prepare($query);
         $stmt->bindParam(':auctionID', $auctionID);
         $stmt->bindParam(':auctioneerID', $auctioneerID);
         $stmt->bindParam(':currentPrice', $newPrice);

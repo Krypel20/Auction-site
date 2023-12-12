@@ -80,6 +80,19 @@ function getLatestAuctions(object $pdo){
     return $data;
 }
 
+function getAuctionsByCategory(object $pdo, $category)
+{
+    $query = "SELECT * FROM auctions WHERE category = ? ORDER BY endDate LIMIT 20";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(1, $category, PDO::PARAM_STR);
+    $stmt->execute();
+
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $data[] = $row;
+    }
+    return $data;
+}
+
 function get_seller_name(object $pdo, $userID)
 {
     $query = "SELECT username FROM users WHERE id = :userID";

@@ -29,47 +29,53 @@
             foreach ($categories as $category)
             {
                 ?>
-                    <a href="category.php?category=<?php echo urlencode($category['category'])?>">
+                    <a href="auctions_category.php?category=<?php echo urlencode($category['category'])?>">
                         <?php echo ucfirst($category['category']) ?></a>
                 <?php
             }
         ?>
     </div> 
     <div class="right">         
-        <!-- <div class="section-title"></div> -->
         <?php $auctions = getLatestAuctions($pdo);
-
                 foreach ($auctions as $auction)
                 {
                     $auctionId = $auction['auctionID'];
                     ?>
-                    <div class="auction">
-                        <div class="auction-left">
-                            <p class="categoryName"><?php echo $auction['category'] ?></p>
-                            <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
-                        </div>
-                        <div class="auction-right">
-                            <p class="auctionName"><?php echo $auction['itemName'] ?></p>
-                            <p class="endDate">Trwa do: <?php echo $auction['endDate'] ?></p>
-                            <p class="status"><?php echo $auction['status'] ?></p>
-                            <p class="description"><?php echo $auction['description'] ?></p>
-                            <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
-                            <p class="sellerName">sprzedawany przez: <?php get_seller_name($pdo, $auction['userID']); ?></p></br>
-                            <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice'] ?>zł</p>
-                            <p class="auctioneerName">licytowany przez: <?php get_auctioneer_name($pdo, $auction['auctioneerID']); ?></p>
-                            <div class='bid-box'>
-                                <button type="button" class="bid-button" data-auction-id="<?php echo $auctionId; ?>">Licytuj</button>
-                                <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $auctionId; ?>" step="1" value="<?php echo $auction['currentPrice'] + 10; ?>" required></input>
+                    <a href="auction.php?category=<?php echo urlencode($auctionId)?>">
+                        <div class="auction">
+                            <div class="auction-left">
+                                <p class="categoryName"><?php echo $auction['category'] ?></p>
+                                <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
                             </div>
-                            <p class='timer'></p>
-                            <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
-                                <p>Czy na pewno chcesz zalicytować?</p>
-                                <button class="confirm-yes">Tak</button>
-                                <button class="confirm-no">Nie</button>
+                            <div class="auction-right">
+                                <p class="auctionName"><?php echo $auction['itemName'] ?></p>
+                                <p class="endDate">Trwa do: <?php echo $auction['endDate'] ?></p>
+                                <p class="status"><?php echo $auction['status'] ?></p>
+                                <p class="description"><?php echo $auction['description'] ?></p>
+                    </a>
+                                <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
+                                <p class="sellerName">sprzedawany przez: <a id='seller_name' style="font-weight: bold;"><?php get_seller_name($pdo, $auction['userID']); ?> </a></p></br>
+                                <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice'] ?>zł</p>
+                                <?php 
+                                    if ($auction['currentPrice'] != $auction['askingPrice']){ ?>
+                                        <p class="auctioneerName">licytowany przez: <a id='auctioneer_name' style="font-weight: bold;"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]); 
+                                    }?></a></p>
+                                <?php 
+                                    if (isset($_SESSION["user_id"])){ ?>
+                                        <div class='bid-box'>
+                                            <button type="button" class="bid-button" data-auction-id="<?php echo $auctionId; ?>">Licytuj</button>
+                                            <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $auctionId; ?>" step="1" value="<?php echo $auction['currentPrice'] + 10; ?>" required></input>
+                                        </div>
+                                <?php } ?>
+                                <p class='timer'></p>
+                                <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
+                                    <p>Czy na pewno chcesz zalicytować?</p>
+                                    <button class="confirm-yes">Tak</button>
+                                    <button class="confirm-no">Nie</button>
+                                </div>
                             </div>
+                            <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
                         </div>
-                        <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
-                    </div>
                 <?php
                 }
             ?>
@@ -77,63 +83,7 @@
     </div>
 </main>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    var bidButtons = document.querySelectorAll(".bid-button");
-    var messageBoxes = document.querySelectorAll(".message-box");
-
-    bidButtons.forEach(function (button, index) {
-        button.addEventListener("click", function () {
-            var auctionId = button.getAttribute("data-auction-id");
-            var currentMessageBox = document.querySelector(".message-box[data-auction-id='" + auctionId + "']");
-            var currentFog = document.querySelector(".fog[data-auction-id='" + auctionId + "']");
-
-            if (currentMessageBox) 
-            {
-                currentMessageBox.style.display = "block";
-                currentFog.style.display = 'flex';
-
-                var confirmYesButton = currentMessageBox.querySelector(".confirm-yes");
-                var confirmNoButton = currentMessageBox.querySelector(".confirm-no");
-                confirmYesButton.addEventListener("click", function () {
-                    var auctionIdToSend = auctionId;
-                    var newPriceToSend = document.getElementById("new_price_" + auctionId).value;
-
-                    // Po potwierdzeniu wywołaj zapytanie Ajax
-                    fetch('includes/presentAuctions.inc.php', {
-                        method: 'POST',
-                        body: new URLSearchParams({
-                            'confirm-licit': '1',
-                            'auction_id': auctionIdToSend,
-                            'new_price': newPriceToSend,
-                        }),
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        credentials: 'include', 
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error =>{
-                        console.error('Błąd zapytania Ajax:', error);
-                    });
-
-                    currentMessageBox.style.display = "none";
-                    currentFog.style.display = 'none';
-                });
-
-                confirmNoButton.addEventListener("click", function () 
-                {
-                    currentMessageBox.style.display = "none";
-                    currentFog.style.display = 'none';
-                });
-            }
-        });
-    });
-});
-</script>
+<script src="auctions.script.js"> </script>
     <?php include 'includes/footer.php' ?>
 </body>
 </html>

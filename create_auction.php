@@ -16,7 +16,7 @@
 </head>
 <body>
 <header>
-        <?php include 'includes/nav.php' ?>
+        <?php include 'nav.php' ?>
 </header>
     <div class="create-auction-container">
         <form action="includes/createAuction.inc.php" class="create-auction-form" method="post">

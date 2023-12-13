@@ -16,7 +16,7 @@
 </head>
 <body>
     <header>
-        <?php include 'includes/nav.php' ?>
+        <?php include 'nav.php' ?>
         <div class="title-header">
             <h1>Aukcje bliskie zakończenia</h1> 
         </div>

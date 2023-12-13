@@ -16,7 +16,7 @@
 </head>
 <body>
     <header>
-        <?php include 'includes/nav.php' ?>
+        <?php include 'nav.php' ?>
         <div class="profile-header">
             <div class="profile-picture"><?php //get profile picture from db?></div>
             <p id="user-name"> </p>

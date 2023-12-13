@@ -22,7 +22,7 @@
 </head>
 <body>
     <header>
-        <?php include 'includes/nav.php' ?>
+        <?php include 'nav.php' ?>
         <div class="title-header">
             <h1><?php echo 'Aukcja nr ' . $id; ?></h1> 
         </div>

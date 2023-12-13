@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <?php include 'includes/nav.php' ?>
+        <?php include 'nav.php' ?>
         <div class="title-header">
             <div class="logo"> <img src="img/AuctionHammer.png"/></div>
             <h1>Portal Aukcyjny</h1> 

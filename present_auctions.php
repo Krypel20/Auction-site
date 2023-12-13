@@ -2,6 +2,7 @@
     require_once "includes/config_session.inc.php";
     require_once "includes/presentAuctions.inc.php";
     require_once "includes/login_view.inc.php";
+    $_SESSION['url'] = $_SERVER['REQUEST_URI']; //zapisanie strony jako ostatniej odwiedzonej przez użytkownika
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -11,7 +12,7 @@
     <meta name="description" content="Strona aukcyjna, sprzedawaj kupuj i licytuj">
     <link rel="stylesheet" type="text/css" href="css/presentAuctions.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Dom Aukcyjny</title>
+    <title>Portal Aukcyjny</title>
 </head>
 <body>
     <header>
@@ -41,15 +42,15 @@
                 {
                     $auctionId = $auction['auctionID'];
                     ?>
-                    <a href="auction.php?category=<?php echo urlencode($auctionId)?>">
+                    <a href="auction.php?id=<?php echo urlencode($auctionId)?>">
                         <div class="auction">
                             <div class="auction-left">
-                                <p class="categoryName"><?php echo $auction['category'] ?></p>
+                                <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Koniec za <?php echo $auction['endDate'] ?></p>
                                 <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
                             </div>
                             <div class="auction-right">
                                 <p class="auctionName"><?php echo $auction['itemName'] ?></p>
-                                <p class="endDate">Trwa do: <?php echo $auction['endDate'] ?></p>
+                                <p class="categoryName"><?php echo $auction['category'] ?></p>
                                 <p class="status"><?php echo $auction['status'] ?></p>
                                 <p class="description"><?php echo $auction['description'] ?></p>
                     </a>
@@ -67,7 +68,6 @@
                                             <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $auctionId; ?>" step="1" value="<?php echo $auction['currentPrice'] + 10; ?>" required></input>
                                         </div>
                                 <?php } ?>
-                                <p class='timer'></p>
                                 <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
                                     <p>Czy na pewno chcesz zalicytować?</p>
                                     <button class="confirm-yes">Tak</button>
@@ -83,7 +83,7 @@
     </div>
 </main>
 </div>
-<script src="auctions.script.js"> </script>
+<script src="js/biding.script.js"> </script>
     <?php include 'includes/footer.php' ?>
 </body>
 </html>

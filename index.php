@@ -1,6 +1,7 @@
 <?php 
     require_once "includes/config_session.inc.php";
     require_once "includes/login_view.inc.php";
+    $_SESSION['url'] = $_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -8,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nazwa Strony</title>
+    <title>Portal Aukcyjny</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
@@ -17,7 +18,7 @@
         <?php include 'includes/nav.php' ?>
         <div class="title-header">
             <div class="logo"> <img src="img/AuctionHammer.png"/></div>
-            <h1>Dom Aukcyjny</h1> 
+            <h1>Portal Aukcyjny</h1> 
             Strona poświęcona aukcjom i sprzedaży towarów wartościowych
         </div>
     </header>
@@ -34,7 +35,7 @@
         <div class="picture-box">
             <a href="present_auctions.php" class="custom-link" id="stworz_aukcje">
                 <img src="img/hammer.jpg" alt="Latest Auctions">
-                <span class="caption">Stwórz aukcje</span>
+                <span class="caption">Dodaj aukcje</span>
             </a>
         </div>
     </div>

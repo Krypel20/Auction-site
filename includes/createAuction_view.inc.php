@@ -17,6 +17,7 @@ $categories = [
     'Elektronika',
     'Dom i Ogród',
     'Biżuteria i Zegarki',
+    'Antyki',
 ];
 
 function is_user_logged_in() 

@@ -1,11 +1,13 @@
 <?php 
     require_once "includes/config_session.inc.php";
     require_once "includes/presentAuctions.inc.php";
+    require_once "includes/auction.view.inc.php";
     require_once "includes/login_view.inc.php";
     $_SESSION['url'] = $_SERVER['REQUEST_URI']; //zapisanie strony jako ostatniej odwiedzonej przez użytkownika
 
-    if(isset($_GET['category'])){
-        $cat = urldecode($_GET['category']);
+    if(isset($_GET['id'])){
+        $id = urldecode($_GET['id']);
+        $auction = getAuctionById($pdo, $id);
     }
 ?>
 <!DOCTYPE html>
@@ -14,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Strona aukcyjna, sprzedawaj kupuj i licytuj">
-    <link rel="stylesheet" type="text/css" href="css/presentAuctions.css">
+    <link rel="stylesheet" type="text/css" href="css/auction.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Dom Aukcyjny</title>
 </head>
@@ -22,7 +24,7 @@
     <header>
         <?php include 'includes/nav.php' ?>
         <div class="title-header">
-            <h1><?php echo $cat ?></h1> 
+            <h1><?php echo $auction['itemName'] ?></h1> 
         </div>
     </header>
 <div class="container">
@@ -42,25 +44,23 @@
         ?>
     </div> 
     <div class="right">         
-        <?php $auctions = getAuctionsByCategory($pdo, $cat); 
-                foreach ($auctions as $auction)
-                {
-                    $auctionId = $auction['auctionID'];
-                    ?>
+        <?php
+            $auctionId = $id;
+                ?>
                     <a href="auction.php?id=<?php echo urlencode($auctionId)?>">
                         <div class="auction">
-                            <div class="auction-left">
+                            <div class="auction-top">
+                                <p class="categoryName"><?php echo $auction['category'] ?></p>
+                                <p class="sellerName">sprzedawany przez: <a id='seller_name' style="font-weight: bold;"><?php get_seller_name($pdo, $auction['userID']); ?> </a></p>
+                                <p class="auctionName"><?php echo $auction['itemName'] ?></p>
                                 <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Koniec za <?php echo $auction['endDate'] ?></p>
                                 <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
-                            </div>
-                            <div class="auction-right">
-                                <p class="auctionName"><?php echo $auction['itemName'] ?></p>
-                                <p class="categoryName"><?php echo $auction['category'] ?></p>
-                                <p class="status"><?php echo $auction['status'] ?></p>
                                 <p class="description"><?php echo $auction['description'] ?></p>
+                            </div>
+                            <div class="auction-bottom">
+                                <p class="status"><?php echo $auction['status'] ?></p>
                     </a>
                                 <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
-                                <p class="sellerName">sprzedawany przez: <a id='seller_name' style="font-weight: bold;"><?php get_seller_name($pdo, $auction['userID']); ?> </a></p></br>
                                 <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice'] ?>zł</p>
                                 <?php 
                                     if ($auction['currentPrice'] != $auction['askingPrice']){ ?>
@@ -79,11 +79,8 @@
                                     <button class="confirm-no">Nie</button>
                                 </div>
                             </div>
-                            <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
-                        </div>
-                <?php
-                }
-            ?>
+                        <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
+                </div>
         </div>
     </div>
 </main>

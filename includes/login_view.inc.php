@@ -7,14 +7,20 @@ function is_user_logged_in()
     if(isset($_SESSION['user_id'])){
         $time = new DateTime();
         $newtime = $time->Modify("+2 seconds");
-        header("location:index.php");
+
+        if(isset($_SESSION['url'])){
+            $url = $_SESSION['url']; // adres ostatnio odwiedzonej strony
+        }else{
+            $url = "index.php"; // domyślna strona główna
+        }
+        header("Location: $url"); // przeniesienie na odpowiednią strone
     }
 }
 
 function output_username()
 {
     if(isset($_SESSION["user_id"])){
-        echo "Jesteś zalogowany jako " . $_SESSION ["user_username"];
+        echo "Zalogowany jako " . $_SESSION ["user_username"];
     }else{
         echo "Logowanie";
     }

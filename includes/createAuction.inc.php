@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once 'createAuction_contr.inc.php';
 
         $errors = [];
-        //Obsluga bledow przy dodawaniu aukcji
 
         require_once "config_session.inc.php";
 

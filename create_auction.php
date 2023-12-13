@@ -50,6 +50,7 @@
                 <label for="picture">Dodaj Zdjęcie:</label>
                 <input type="file" name="picture" id="picture" accept="image/*">
             </div>
+            <?php displayAuctionCreationMessage(); ?>
             <button type="submit">Dodaj aukcje</button>
         </form>
     </div>

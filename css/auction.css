@@ -16,31 +16,31 @@ main{
     margin-top: 10px;
     margin-bottom: 20px;
 }
-main .section-title{
+.section-title{
     font-size: 18px;
     font-weight: bold;
 }
 
-main .left {
+.left {
     border-right: thin solid rgb(82, 82, 82);
     font-size: 18px;
     padding: 20px;
     text-align: center;
 }
-main .left a{
+.left a{
     display: block;
     text-decoration: none;
     color:rgb(0, 0, 0);
     font-size: 16px;
     margin-bottom:10px;
 }
-main .left #ostatnie_aukcje{
+.left #ostatnie_aukcje{
     text-align: center;
     padding-bottom: 20px;
     font-size: 16px;
     border-bottom: thin solid rgb(82, 82, 82);
 }
-main .auction .fog{
+.auction .fog{
     background-color: rgba(0, 0, 0, 0.5);;
     display: none;
     position:absolute;
@@ -49,17 +49,19 @@ main .auction .fog{
     min-height: 100%;
     border-radius: 20px;
 }
-main .left a:hover{
+.left a:hover{
     text-decoration: underline;
 }
-main .right .section-title{
+.right .section-title{
     text-align: center;
     padding: 20px;
 }
 
 .auction {
     position: relative;
-    max-width: 800px;
+    display: inline-block;
+    max-width: 1000px;
+    min-width: 900px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 20px;
@@ -67,17 +69,18 @@ main .right .section-title{
     border-bottom: rgb(225, 200, 0) groove 6px;
     background-color: rgb(248, 248, 248);
 }
-
-.auction-top {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Dodano, aby elementy były na przeciwnych końcach */
+.auction-right{
+    display: inline-block;
+    max-width: fit-content;
 }
-.auction-top .picture img {
+.auction-top {
+    justify-content: space-between;
+}
+.picture img {
     content: '';
     display: flex;
-    max-width: 500px;
-    max-height: 400px;
+    max-width: 600px;
+    max-height: 500px;
     background-color: #000000; 
 }
 
@@ -85,7 +88,7 @@ main .right .section-title{
     position: absolute;
     right:20px;
     top: 0px;
-    font-size: 18px;
+    font-size: 16px;
     color: #333;
     font-weight: lighter;
 }
@@ -102,13 +105,12 @@ main .right .section-title{
 }
 
 .picture {
-    flex: 0 0 48%; /* Zmieniono szerokość obrazu na 48% */
+    flex: 0 0 48%; /* Adjust the width of the picture */
+    justify-content: center;
+    align-content: center;
+    outline: groove 3px black;
+    width: fit-content;
     margin-bottom: 10px;
-}
-
-.picture img {
-    max-width: 100%;
-    height: auto;
 }
 
 .description {
@@ -120,6 +122,7 @@ main .right .section-title{
 
 .auction-bottom {
     margin-top: 20px;
+    flex: 0 0 100%; /* Ensure full width */
 }
 
 .status {
@@ -139,28 +142,14 @@ main .right .section-title{
 .auctioneerName {
     font-size: 16px;
     color: #333;
-    margin: 10px 0;
+    display: flex;
 }
 
 .sellerName {
-    position: absolute;
-    top:10px;
+    top:0px;
     font-size: 16px;
     color: #333;
     margin-bottom: 20px;
-}
-
-.bid-box {
-    margin-top: 20px;
-}
-
-.bid-button {
-    background-color: #4285f4;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
 }
 
 .new_price {
@@ -174,7 +163,7 @@ main .auction{
     margin: 10px
 }
 
-main .auction .message-box {
+.message-box {
     display: none;
     width: fit-content;
     height: fit-content;
@@ -189,13 +178,13 @@ main .auction .message-box {
     text-align: center;
     font-weight: bold;
 }
-main .auction .bid-box{
+.auction .bid-box{
     display: flex;
     position: relative;
     max-width: fit-content;
     max-height: fit-content;
 }
-main .auction input{
+.auction input{
     width: 50%;
     margin-left:5px;
 }
@@ -207,17 +196,17 @@ main .auction input{
     width: fit-content;
     height: fit-content;
 }
-main .auction button, input{
+.auction button, input{
     font-size: 16px;
     font-weight: bold;
-    height:fit-content;
+    height: fit-content;
     padding: 5px;
     background-color: rgb(249, 249, 249);
     outline: 2px outset black;
     transition: 0.25s;
 }
 
-main .auction button:hover, input:hover{
+.auction button:hover, input:hover{
     outline: 2px inset black;
     background-color: rgb(252, 223, 0)
 }

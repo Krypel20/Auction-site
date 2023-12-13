@@ -24,7 +24,7 @@
     <header>
         <?php include 'includes/nav.php' ?>
         <div class="title-header">
-            <h1><?php echo $auction['itemName'] ?></h1> 
+            <h1><?php echo 'Aukcja nr ' . $id; ?></h1> 
         </div>
     </header>
 <div class="container">
@@ -47,25 +47,23 @@
         <?php
             $auctionId = $id;
                 ?>
-                    <a href="auction.php?id=<?php echo urlencode($auctionId)?>">
-                        <div class="auction">
-                            <div class="auction-top">
+                <div class="auction">
+                    <div class="auction-top">
                                 <p class="categoryName"><?php echo $auction['category'] ?></p>
-                                <p class="sellerName">sprzedawany przez: <a id='seller_name' style="font-weight: bold;"><?php get_seller_name($pdo, $auction['userID']); ?> </a></p>
                                 <p class="auctionName"><?php echo $auction['itemName'] ?></p>
-                                <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Koniec za <?php echo $auction['endDate'] ?></p>
+                                <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Kończy się <?php echo $auction['endDate'] ?></p>
+                            <div class="auction-left">
                                 <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
-                                <p class="description"><?php echo $auction['description'] ?></p>
+                                <p class="sellerName">Sprzedający: <a id='seller_name' style="font-weight: bold;"><?php get_seller_name($pdo, $auction['userID']); ?> </a></p>
                             </div>
-                            <div class="auction-bottom">
-                                <p class="status"><?php echo $auction['status'] ?></p>
-                    </a>
+                            <div class="auction-right">
                                 <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p>
                                 <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice'] ?>zł</p>
                                 <?php 
                                     if ($auction['currentPrice'] != $auction['askingPrice']){ ?>
-                                        <p class="auctioneerName">licytowany przez: <a id='auctioneer_name' style="font-weight: bold;"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]); 
-                                    }?></a></p>
+                                        <p class="auctioneerName">licytowany przez: <a id='auctioneer_name' style="font-weight: bold; display: inline;"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]);?> </a></p>
+                                    <?php
+                                    }?>
                                 <?php 
                                     if (isset($_SESSION["user_id"])){ ?>
                                         <div class='bid-box'>
@@ -73,13 +71,18 @@
                                             <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $auctionId; ?>" step="1" value="<?php echo $auction['currentPrice'] + 10; ?>" required></input>
                                         </div>
                                 <?php } ?>
+                            </div>
+                        </div>
+                        <div class="auction-bottom">
+                                <p class="status"><?php echo $auction['status'] ?></p>
+                                <p class="description"><?php echo $auction['description'] ?></p>
                                 <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
                                     <p>Czy na pewno chcesz zalicytować?</p>
                                     <button class="confirm-yes">Tak</button>
                                     <button class="confirm-no">Nie</button>
-                                </div>
                             </div>
-                        <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
+                        </div>    
+                    <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
                 </div>
         </div>
     </div>

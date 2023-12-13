@@ -45,7 +45,7 @@
                     <a href="auction.php?id=<?php echo urlencode($auctionId)?>">
                         <div class="auction">
                             <div class="auction-left">
-                                <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Koniec za <?php echo $auction['endDate'] ?></p>
+                                <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Do <?php echo $auction['endDate'] ?></p>
                                 <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
                             </div>
                             <div class="auction-right">
@@ -59,8 +59,9 @@
                                 <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice'] ?>zł</p>
                                 <?php 
                                     if ($auction['currentPrice'] != $auction['askingPrice']){ ?>
-                                        <p class="auctioneerName">licytowany przez: <a id='auctioneer_name' style="font-weight: bold;"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]); 
-                                    }?></a></p>
+                                        <p class="auctioneerName">licytowany przez: <a id='auctioneer_name' style="font-weight: bold; display: inline;"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]);?> </a></p>
+                                        <?php
+                                    }?>
                                 <?php 
                                     if (isset($_SESSION["user_id"])){ ?>
                                         <div class='bid-box'>

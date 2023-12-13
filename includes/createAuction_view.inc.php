@@ -29,18 +29,9 @@ function is_user_logged_in()
     }
 }
 
-function check_auction_creation_errors()
-{
-    if(isset($_SESSION['errors_signup'])){
-        $errors = $_SESSION['errors_auction_create'];
-
-        foreach($errors as $error){
-            echo '<p class="form-error">'. $error .'</p>';
-        }
-
-        unset($_SESSION['errors_auction_create']);
-    }else if(isset($_GET["create"]) && $_GET["create"]==="success"){
-        echo '<p class="form-success" style="margin-bottom: 0px;">Pomyślnie utworzono licytacje!</p></br>
-        <a href="index.php" style="display: block; text-align: center; justify-content: center; color: black; font-weight: bold; margin-bottom: 15px;">Wróć na stronę główną</a>';
+function displayAuctionCreationMessage() {
+    if (isset($_GET['create']) && $_GET['create'] === 'success') {
+        echo '<div class="success-message" style="padding-bottom:10px; color:green;">Aukcja została pomyślnie utworzona!</div>';
     }
 }
+

@@ -33,7 +33,7 @@
             </a>
         </div>
         <div class="picture-box">
-            <a href="present_auctions.php" class="custom-link" id="stworz_aukcje">
+            <a href="create_auction.php" class="custom-link" id="stworz_aukcje">
                 <img src="img/hammer.jpg" alt="Latest Auctions">
                 <span class="caption">Dodaj aukcje</span>
             </a>

@@ -45,7 +45,7 @@
                     <a href="auction.php?id=<?php echo urlencode($auctionId)?>">
                         <div class="auction">
                             <div class="auction-left">
-                                <p class="endDate timer" auction-end="<?php echo $auction['endDate'] ?>">Do <?php echo $auction['endDate'] ?></p>
+                                <p>Pozostało: <p class="timer"></p></p>
                                 <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
                             </div>
                             <div class="auction-right">
@@ -75,7 +75,7 @@
                                     <button class="confirm-no">Nie</button>
                                 </div>
                             </div>
-                            <div class='fog' data-auction-id="<?php echo $auctionId; ?>"></div>
+                                <div class='fog' style="display: none;" data-auction-id="<?php echo $auctionId; ?>"></div>      
                         </div>
                 <?php
                 }
@@ -85,6 +85,27 @@
 </main>
 </div>
 <script src="js/biding.script.js"> </script>
+<script src="js/timer.script.js"> </script>
+<script src="js/update_data.script.js"></script>
+<script>
+// Pobierz identyfikatory aukcji z PHP
+const auctionIds = <?php echo json_encode(array_column($auctions, 'auctionID')); ?>;
+
+// Uruchom funkcję aktualizacji dla każdego identyfikatora co 5 sekund
+auctionIds.forEach(auctionId => {
+    setInterval(() => updateCurrentPrice(auctionId), 5000);
+});
+
+
+// Pobierz daty zakończenia aukcji z PHP
+const auctionEndDates = <?php echo json_encode(array_column($auctions, 'endDate')); ?>;
+
+// Uruchom funkcję aktualizacji liczników na podstawie pobranych dat
+updateCountdownTimers(auctionEndDates);
+
+// Uruchom funkcję aktualizacji co 5 sekund
+setInterval(() => updateCountdownTimers(auctionEndDates), 1000);
+</script>
     <?php include 'includes/footer.php' ?>
 </body>
 </html>

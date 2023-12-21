@@ -1,7 +1,7 @@
 <?php
     
 declare(strict_types= 1);
-//funkcje zmieniajace wyglad strony
+//funkcje odpowiedzialne za wyswietlanie błedów
 
 function check_signup_errors()
 {

@@ -1,7 +1,7 @@
 <?php 
     require_once "includes/config_session.inc.php";
     require_once "includes/userPage_view.inc.php";
-
+    // require_once "includes/userPage_model.inc.php";
     is_user_logged_in();
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
     <header>
         <?php include 'nav.php' ?>
         <div class="profile-header">
-            <div class="profile-picture"><?php //get profile picture from db?></div>
+            <div class="profile-picture"></div>
             <p id="user-name"> </p>
         </div>
     </header>

@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 require_once 'dbh.inc.php';
-//funkcje odpowiedzialne za interakcje z baza danych
 
+//wyciąga dane aukcji z bazy danych
 function getAuctionData(object $pdo, $auctionId){
     $query = "SELECT auctioneerID, userID, currentPrice FROM auctions WHERE auctionID = :auctionId";
     $stmt = $pdo->prepare($query);
@@ -11,6 +11,7 @@ function getAuctionData(object $pdo, $auctionId){
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+//zapisuje nowe dane licytowanej aukcji
 function saveLicitData(object $pdo, $auctionID, $auctioneerID, $newPrice) {
     try {
         $query = "UPDATE auctions SET auctioneerID = :auctioneerID, currentPrice = :currentPrice WHERE auctionID = :auctionID";

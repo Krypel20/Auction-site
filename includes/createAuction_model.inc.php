@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once 'dbh.inc.php';
 
-//Funkcje do interakcji z baza danych
+//wprowadzenie danych aukcji do bazy danych
 function set_auction(object $pdo, string $itemName, string $descr, string $endDate, string $askingPrice, string $picture, string $category)
 {
     $userID = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;

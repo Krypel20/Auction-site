@@ -5,6 +5,7 @@ $dbName = "serwissprzedazowy";
 $dbusername = "root";
 $dbpassword = "";
 
+//łączenie z bazą
 try {
   $pdo = new PDO("mysql:host=$host;dbname=$dbName", $dbusername, $dbpassword);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 require_once 'dbh.inc.php';
-//funkcje odpowiedzialne za interakcje z baza danych
 
+//sprawdzanie czy uzytkownik istnieje w bazie danych
 function get_user(object $pdo, string $email)
 {
     $query = "SELECT * FROM users WHERE email = :email;"; 

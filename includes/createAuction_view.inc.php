@@ -20,6 +20,7 @@ $categories = [
     'Antyki',
 ];
 
+//przeniesienie uzytkownika na strone logowania gdy jest niezalogowany
 function is_user_logged_in() 
 {
     if(!isset($_SESSION['user_id'])){
@@ -29,6 +30,7 @@ function is_user_logged_in()
     }
 }
 
+//wyswietanie błędów przy tworzeniu rejestracji
 function displayAuctionCreationMessage() {
     if (isset($_GET['create']) && $_GET['create'] === 'success') {
         echo '<div class="success-message" style="padding-bottom:10px; color:green;">Aukcja została pomyślnie utworzona!</div>';

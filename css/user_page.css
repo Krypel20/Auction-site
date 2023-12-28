@@ -3,10 +3,11 @@
     min-height: 300px;
     max-width: 900px;
     display: flex;
+    position:relative;
+    z-index: 0;
     margin: auto;
     margin-top: 50px;
     align-items: flex-end;
-    position: relative;
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.4);
     outline: 1px solid black;
     border-bottom: rgb(255, 247, 0) inset 10px;
@@ -17,6 +18,7 @@
    background-color: white;
    display: flex;
    margin: 20px;
+   margin-left: 35px;
    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
    border: groove 4px rgb(0, 0, 0);
    border-style:outset;
@@ -49,4 +51,111 @@
     margin:auto;
     display: flex;
     border: 1px solid black;
+}
+
+#username{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 26px;
+    color:rgb(27, 27, 27);
+    font-weight:lighter;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+button{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    padding: 5px;
+    font-weight: bold;
+    background-color: yellow;
+    outline: outset rgb(116, 116, 116) 3px;
+}
+
+button::hover{
+    outline: inset rgb(116, 116, 116) 3px;
+    background-color: rgb(232, 232, 0);
+}
+
+.title{
+    text-align: center;
+    padding-top: 25px;
+    margin: auto;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.created-auctions{
+    display: grid;
+    justify-content: center;
+    margin: auto;
+    padding: 10px;
+    width: 90%;
+    border-top: solid thin rgb(135, 135, 135);
+}
+
+.auction{
+    display: grid;
+    text-align: center;
+    align-items: center;
+    margin: auto;   
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: rgb(250, 250, 250);
+    min-width: 650px;
+    max-width: 700px;
+    min-height: 50px;
+    outline: black 1px solid;
+    border-top: groove 3px rgb(183, 183, 183);
+    border-bottom: groove 3px rgb(183, 183, 183);
+    border-radius: 8px;
+    margin: 5px;
+    padding: 5px;
+    height: fit-content;
+}
+
+.auction:hover{
+    box-shadow: 0px 2px 10px rgb(49, 49, 49);
+}
+
+.element{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;  
+    margin:0px;
+    border-right: solid thin rgb(135, 135, 135);
+    font-weight: bold;
+    height: 100%;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+.tab{
+    display: grid;
+}
+.auction-title{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+}
+
+.current-price{
+    color: rgb(65, 0, 0);
+}
+.asking-price{
+    color: rgb(86, 86, 86);
+}
+
+.timer{
+    color: darkred;
+}
+
+.auction-title,
+.current-price,
+.asking-price,
+.timer {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }

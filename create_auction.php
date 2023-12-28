@@ -37,7 +37,7 @@
                 </div>
                 <div class="column">
                     <label for="endDate">Planowana Data Zakończenia:</label>
-                    <input type="datetime-local" name="end_date" id="end_date" required>
+                    <input type="datetime-local" name="end_date" id="end_date" required><br>
 
                     <label for="askingPrice">Cena Wywoławcza:</label>
                     <input type="number" name="asking_price" id="asking_price" step="0.01" required>

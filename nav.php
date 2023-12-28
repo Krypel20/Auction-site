@@ -5,14 +5,12 @@
         </div>
         <div class="loggedin">
             <?php
-                if(isset($_SESSION["user_id"])){
-                    echo '<a href="user_page.php" class="hello-text" style="color: darkred; ">' . $_SESSION ["user_username"] .'</a>';
-                    // echo "<a href='user_page.php'>Profil</a>";
-                    echo "<a href='create_auction.php'>Stwórz aukcje</a>";
-                    echo "<a href='includes/logout.inc.php'>Wyloguj</a>";
-                }else{
-                    echo "<a href='login.php'>Logowanie</a>";
-                }
-            ?>
+                if(isset($_SESSION["user_id"])){ ?>
+                    <a href="user_profile.php" class="profile-link" style="color: darkred; "> <?php echo $_SESSION ["user_username"] ?></a>
+                    <a href='create_auction.php'>Stwórz aukcje</a>
+                    <a href='includes/logout.inc.php'>Wyloguj</a>
+            <?php }else{ ?>
+                    <a href='login.php'>Logowanie</a>
+            <?php }?>
     </div>  
 </nav>

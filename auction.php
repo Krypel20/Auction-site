@@ -1,6 +1,7 @@
 <?php 
     require_once "includes/config_session.inc.php";
     require_once "includes/presentAuctions.inc.php";
+    require_once "includes/presentAuctions_model.inc.php";
     require_once "includes/auction.view.inc.php";
     require_once "includes/login_view.inc.php";
     $_SESSION['url'] = $_SERVER['REQUEST_URI']; //zapisanie strony jako ostatniej odwiedzonej przez użytkownika
@@ -8,6 +9,13 @@
     if(isset($_GET['id'])){
         $id = urldecode($_GET['id']);
         $auction = getAuctionById($pdo, $id);
+    }
+    
+    $currentTimestamp = time();
+    $auctionEndDateTimestamp = strtotime($auction['endDate']);
+
+    if ($auctionEndDateTimestamp && $auctionEndDateTimestamp < $currentTimestamp){
+        closeAuction($pdo, $id);
     }
 ?>
 <!DOCTYPE html>
@@ -44,13 +52,9 @@
         ?>
     </div> 
     <div class="right">         
-        <?php
-            $auctionId = $id;
-            $auctionEndDate = $auction['endDate'];
-                ?>
                 <div class="auction">
                     <p class="auctionName"><?php echo $auction['itemName'] ?></p>
-                    <p class="endDate timer">Kończy się <?php echo $auction['endDate'] ?></p>
+                    <p class="endDate timer"><?php echo $auction['endDate'] ?></p>
                     <div class="auction-bottom">
                         <div class="auction-left">
                                 <p class="categoryName"><?php echo $auction['category'] ?></p>
@@ -58,47 +62,54 @@
                             <p class="sellerName">Sprzedający: <a id='seller_name' style="font-weight: bold;"><?php get_seller_name($pdo, $auction['userID']); ?> </a></p>
                         </div>
                         <div class="auction-right">
-                                <p class="status"><?php echo $auction['status'] ?></p>
-                                <p class="description"><?php echo $auction['description'] ?></p>
-                                <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?>zł</p><br>
-                                <p class="currentPrice">Aktualna cena: <?php echo $auction['currentPrice'] ?>zł</p>
-                                <?php 
-                                    if ($auction['currentPrice'] != $auction['askingPrice']){ ?>
-                                        <p class="auctioneerName">Licytowany przez: <a id='auctioneer_name' style="font-weight: bold; display: inline;"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]);?> </a></p>
-                                    <?php
-                                    }?>
-                                <?php 
-                                    if (isset($_SESSION["user_id"])){ ?>
-                                        <div class='bid-box'>
-                                            <button type="button" class="bid-button" data-auction-id="<?php echo $auctionId; ?>">Licytuj</button>
-                                            <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $auctionId; ?>" step="1" value="<?php echo $auction['currentPrice'] + 10; ?>" required></input>
-                                        </div>
-                                <?php } ?>
-                                <div class="message-box" data-auction-id="<?php echo $auctionId; ?>">
-                                    <p>Czy na pewno chcesz zalicytować?</p>
-                                    <button class="confirm-yes">Tak</button>
-                                    <button class="confirm-no">Nie</button>
+                            <p class="status"><?php echo $auction['status'] ?></p>
+                            <p class="description"><?php echo $auction['description'] ?></p>
+                            <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?> zł</p><br>
+                            <p class="currentPrice" data-auction-id="<?php echo $id; ?>">Aktualna cena: <?php echo $auction['currentPrice'] ?> zł</p>
+                            <p class="auctioneerName">Licytowany przez: <a id='auctioneer_name' data-auction-id="<?php echo $id; ?>"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]);?> </a></p>
+                            <?php 
+                                if (isset($_SESSION["user_id"]) && $auction['status']!='Closed'){ ?>
+                                    <div class='bid-box'>
+                                        <button type="button" class="bid-button" data-auction-id="<?php echo $id; ?>">Licytuj</button>
+                                        <input type="number" class='new_price' name="new_price" id="new_price_<?php echo $id; ?>" step="1" value="<?php echo $auction['currentPrice'] + 10; ?>" required></input>
+                                    </div>
+                            <?php } ?>
+                            <div class="message-box" data-auction-id="<?php echo $id; ?>">
+                                <p>Czy na pewno chcesz zalicytować?</p>
+                                <button class="confirm-yes">Tak</button>
+                                <button class="confirm-no">Nie</button>
+                            </div>
+                            <div class="error-message-box" data-auction-id="<?php echo $id; ?>" style="display: none;">
+                                <div class="error-box"></div>
+                                <button class="confirm-ok">OK</button>
                             </div>
                         </div>
                     </div>    
-                    <div class='fog' style="display: none;" data-auction-id="<?php echo $auctionId; ?>"></div>
+                    <?php 
+                        if($auction['status']=='Closed') {?>
+                        <div class='fog' style="display: flex;" data-auction-id="<?php echo $id; ?>"></div>
+                            <p class="auction-ended">Aukcja zakończona</p>
+                            <p class="sold">Sprzedano za <?php echo $auction['currentPrice']?> zł</p>
+                    <?php }else {?>
+                            <div class='fog' style="display: none;" data-auction-id="<?php echo $id; ?>"></div>
+                    <?php }?> 
                 </div>
         </div>
     </div>
 </main>
 </div>
 <script src="js/biding.script.js"> </script>
-<script src="js/timer.script.js"> </script>
+<script src="js/auction_timer.script.js"> </script>
 <script src="js/update_data.script.js"></script>
 <script>
-// Pobierz identyfikatory aukcji z PHP
-const auctionId = <?php echo json_encode($auction, 'auctionID'); ?>;
+// Pobierz identyfikator aukcji ze strony
+const auctionId = <?php echo json_encode($auction['auctionID']); ?>;
 
-// Uruchom funkcję aktualizacji dla każdego identyfikatora co 5 sekund
-setInterval(() => updateCurrentPrice(auctionId), 5000);
+// Uruchom funkcję aktualizacji dla każdej aukcji na stronie co 1 sekunde
+setInterval(() => updateData(auctionId), 1000);
 
 // Pobierz daty zakończenia aukcji z PHP
-const auctionEndDate = <?php echo json_encode($auction, 'endDate'); ?>;
+const auctionEndDate = <?php echo json_encode($auction['endDate']); ?>;
 
 // Uruchom funkcję aktualizacji liczników na podstawie pobranych dat
 updateCountdownTimers(auctionEndDate);

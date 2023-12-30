@@ -48,11 +48,11 @@
                         closeAuction($pdo, $auctionId);
                     }
                     ?>
-                    <a href="auction.php?id=<?php echo urlencode($auctionId)?>">
+                    <a href="auction.php?id=<?php echo urlencode($auction['auctionID'])?>">
                         <div class="auction">
                             <div class="auction-left">
                             <p style='font-size: 15px;'><p class="timer"></p>
-                                <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
+                                <p class="picture"><img src="<?php echo "uploads/{$auction['picture']}"?>"></p>
                             </div>
                             <div class="auction-right">
                                 <p class="auctionName"><?php echo $auction['itemName'] ?></p>

@@ -1,7 +1,6 @@
 <?php 
     require_once "includes/config_session.inc.php";
     require_once "includes/createAuction_view.inc.php";
-    //$categories = get_categories_from_db($pdo);
     is_user_logged_in();
 ?>
 <!DOCTYPE html>
@@ -16,10 +15,10 @@
 </head>
 <body>
 <header>
-        <?php include 'nav.php' ?>
+    <?php include 'nav.php' ?>
 </header>
     <div class="create-auction-container">
-        <form action="includes/createAuction.inc.php" class="create-auction-form" method="post">
+        <form action="includes/createAuction.inc.php" class="create-auction-form" method="POST" enctype="multipart/form-data">
             <h1>Tworzenie aukcji</h1>
             <div class="first-sector">
                 <div class="column">
@@ -27,13 +26,7 @@
                     <input type="text" name="itemName" id="itemName" required>
 
                     <label for="category">Kategoria:</label>
-                    <select name="category" id="category" required>
-                        <?php
-                            foreach ($categories as $category) {
-                                echo "<option value=\"$category\">$category</option>";
-                            }
-                        ?>
-                    </select>
+                    <select name="category" id="category" required> <?php Categories(); ?></select>
                 </div>
                 <div class="column">
                     <label for="endDate">Planowana Data Zakończenia:</label>
@@ -48,9 +41,9 @@
                 <textarea name="description" id="description" rows="4" required></textarea>
 
                 <label for="picture">Dodaj Zdjęcie:</label>
-                <input type="file" name="picture" id="picture" accept="image/*">
+                <input type="file" name="file" id="picture" accept="image/*">
             </div>
-            <?php displayAuctionCreationMessage(); ?>
+            <?php displayAuctionMessage(); ?>
             <button type="submit">Dodaj aukcje</button>
         </form>
     </div>

@@ -5,7 +5,7 @@ function updateData(auctionId) {
 
     // Wysyłanie zapytania AJAX do serwera
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `includes/get_current_data.inc.php?id=${auctionId}`, true);
+    xhr.open('GET', `includes/getCurrentData.inc.php?id=${auctionId}`, true);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -19,7 +19,7 @@ function updateData(auctionId) {
             const currentPriceElement = document.querySelector(`.currentPrice[data-auction-id="${auctionId}"]`);
             if (currentPriceElement) {
                 currentPriceElement.textContent = `Aktualna cena: ${currentPrice} zł`;
-            }
+            }  
 
             // Aktualizacja nazwy uzytkownika licytującego dana aukcje
             const auctioneerNameElement = document.querySelector(`#auctioneer_name[data-auction-id="${auctionId}"]`);

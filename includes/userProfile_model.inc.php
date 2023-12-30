@@ -17,7 +17,7 @@ function is_user_logged_in()
 }
 
 function getAucitonsCreatedByUser(object $pdo, $userId){
-    $query = "SELECT * FROM auctions WHERE userID = ? ORDER BY creationDate";
+    $query = "SELECT * FROM auctions WHERE userID = ? ORDER BY endDate";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(1, $userId, PDO::PARAM_INT);
     $stmt->execute();
@@ -30,7 +30,7 @@ function getAucitonsCreatedByUser(object $pdo, $userId){
 }
 
 function getAucitonsLicitByUser(object $pdo, $userId){
-    $query = "SELECT * FROM auctions WHERE auctioneerID = ? ORDER BY creationDate";
+    $query = "SELECT * FROM auctions WHERE auctioneerID = ? ORDER BY endDate";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(1, $userId, PDO::PARAM_INT);
     $stmt->execute();

@@ -57,7 +57,7 @@
                         <div class="auction">
                             <div class="auction-left">
                                 <p class="timer"></p>
-                                <p class="picture"><img src="<?php echo "img/{$auction['picture']}"?>"></p>
+                                <p class="picture"><img src="<?php echo "uploads/{$auction['picture']}"?>"></p>
                             </div>
                             <div class="auction-right">
                                 <p class="auctionName"><?php echo $auction['itemName'] ?></p>
@@ -91,8 +91,11 @@
                             <?php 
                                 if($auction['status']=='Closed') {?>
                                 <div class='fog' style="display: flex;" data-auction-id="<?php echo $auctionId; ?>"></div>
-                                <p class="auction-ended">Aukcja zakończona <?php echo $auction["endDate"]?> </p>
-                                <p class="sold">Kupiono za <?php echo $auction['currentPrice']?> zł przez <?php get_auctioneer_name($pdo, $auction['auctioneerID'] )?></p>
+                                    <div class="auction-closed">
+                                        <p class="auction-ended">Aukcja zakończona <?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
+                                        <p class="sold">Kupiono za <a style="color: red;"><?php echo $auction['currentPrice']?> zł</a><br>
+                                        przez <a style="color: #00D100;"><?php get_auctioneer_name($pdo, $auction['auctioneerID'] )?></a></p>
+                                    </div>
                             <?php }else {?>
                                 <div class='fog' style="display: none;" data-auction-id="<?php echo $auctionId; ?>"></div>
                             <?php }?> 

@@ -77,6 +77,14 @@ main{
     color: #980000;
 }
 
+.endDate{
+    font-size: 14px;
+    font-weight: lighter;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #696969;
+}
+
 .auction{
     border-radius: 10px;
     border-top: rgb(255, 225, 0) 6px groove;
@@ -251,6 +259,10 @@ main{
     font-weight: bold;
 }
 
+.auction-closed{
+    text-align: center;
+}
+
 .auction button:hover, input:hover{
     outline: 2px inset black;
     background-color: rgb(252, 223, 0)
@@ -259,4 +271,26 @@ main{
 #seller_name, #auctioneer_name{
     font-weight: bold; 
     display: inline;
+}
+
+.closed{
+    height: 0px;
+    width:100%;
+    background-color: rgb(0, 0, 0);
+    border-top: dotted rgb(255, 234, 0) 8px;
+    border-bottom: dashed rgb(255, 234, 0) 8px;
+}
+
+.closed-message{
+    word-wrap: break-word;
+    margin: 35px;
+    padding: 80px;
+}
+
+.right #ostatnie_aukcje{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 20px;
+    text-decoration: underline;
 }

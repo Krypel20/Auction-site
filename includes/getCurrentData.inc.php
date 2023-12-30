@@ -31,4 +31,3 @@ if (isset($_GET['id'])) {
 } else {
     echo json_encode(['error' => 'Brak identyfikatora aukcji']);
 }
-?>

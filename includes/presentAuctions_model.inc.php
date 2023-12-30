@@ -27,7 +27,7 @@ function saveLicitData(object $pdo, $auctionID, $auctioneerID, $newPrice) {
 
 function getAuctionsByCategory(object $pdo, $category)
 {
-    $query = "SELECT * FROM auctions WHERE category = ? ORDER BY endDate LIMIT 20";
+    $query = "SELECT * FROM auctions WHERE category = ? ORDER BY (endDate >= CURRENT_TIMESTAMP) DESC, endDate >= CURRENT_TIMESTAMP, endDate LIMIT 20";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(1, $category, PDO::PARAM_STR);
     $stmt->execute();
@@ -41,7 +41,7 @@ function getAuctionsByCategory(object $pdo, $category)
 
 function getCategories(object $pdo)
 {
-    $query = "SELECT DISTINCT category FROM auctions";
+    $query = "SELECT DISTINCT category FROM auctions ORDER BY category";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

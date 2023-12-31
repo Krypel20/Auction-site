@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('edit-user-profile');
     const overlay = document.getElementById('overlay');
 
     // Otwieranie formularza po kliknięciu w przycisk
@@ -12,15 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.style.display = 'none';
         }
     });
-});
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    var form = document.getElementById('edit-user-profile');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Zatrzymaj domyślną akcję formularza
-
         changePassword(); // Wywołaj funkcję do obsługi zmiany hasła
     });
 
@@ -28,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var formData = new FormData(form);
 
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function () { 
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
 

@@ -17,11 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 var confirmYesButton = currentMessageBox.querySelector(".confirm-yes");
                 var confirmNoButton = currentMessageBox.querySelector(".confirm-no");
 
+                //Obsługa przycisku 'Tak' w komunikacie o potwierdzeniu chęci licytacji
                 confirmYesButton.addEventListener("click", function () {
                     console.log("Button clicked");
+                    
+                    // Pobranie identyfikatora aukcji i nowej ceny do wysłania
                     var auctionIdToSend = auctionId;
                     var newPriceToSend = document.getElementById("new_price_" + auctionId).value;
 
+                    // Wysłanie żądania POST za pomocą fetch do pliku PHP obsługującego licytację
                     fetch('includes/presentAuctions.inc.php', {
                         method: 'POST',
                         body: new URLSearchParams({
@@ -34,6 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         },
                         credentials: 'include',
                     })
+                    
+                    // Obsługa odpowiedzi w formacie JSON
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
@@ -58,18 +64,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 });
 
+                //Obsługa przycisku 'Nie' w komunikacie o potwierdzeniu chęci licytacji - zamykanie komunikatu
                 confirmNoButton.addEventListener("click", function () {
                     console.log("Button clicked");
-                    // Zamykanie komunikatu
                     currentMessageBox.style.display = "none";
                     currentFog.style.display = 'none';
                 });
 
-                // Dodaj obsługę przycisku OK w komunikacie o błędzie
+                //Obsługa przycisku 'OK' w komunikacie o błędzie - zamykanie komunikatu
                 var confirmOkButton = errorMessageBox.querySelector(".confirm-ok");
                 confirmOkButton.addEventListener("click", function () {
                     console.log("Button clicked");
-                    // Zamykanie komunikatu o błędzie
                     errorMessageBox.style.display = "none";
                     currentFog.style.display = 'none';
                 });

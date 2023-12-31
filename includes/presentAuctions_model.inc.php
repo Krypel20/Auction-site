@@ -25,9 +25,10 @@ function saveLicitData(object $pdo, $auctionID, $auctioneerID, $newPrice) {
     }
 }
 
+//wyciąga dane aukcji z danej kategori
 function getAuctionsByCategory(object $pdo, $category)
 {
-    $query = "SELECT * FROM auctions WHERE category = ? ORDER BY (endDate >= CURRENT_TIMESTAMP) DESC, endDate >= CURRENT_TIMESTAMP, endDate LIMIT 20";
+    $query = "SELECT * FROM auctions WHERE category = ? ORDER BY (endDate >= CURRENT_TIMESTAMP) DESC, endDate >= CURRENT_TIMESTAMP, endDate";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(1, $category, PDO::PARAM_STR);
     $stmt->execute();
@@ -38,7 +39,7 @@ function getAuctionsByCategory(object $pdo, $category)
     return $data;
 }
 
-
+//wyciąga wszystkie kategorie aukcji znajdujacych się w tabeli aukcji 
 function getCategories(object $pdo)
 {
     $query = "SELECT DISTINCT category FROM auctions ORDER BY category";
@@ -51,6 +52,7 @@ function getCategories(object $pdo)
     return $categories;
 }
 
+//wyciąga dane aukcji ostatnio utworzonych
 function getLatestAuctions(object $pdo){
 
     $query = "SELECT * FROM auctions WHERE endDate >= CURRENT_TIMESTAMP ORDER BY endDate LIMIT 20";
@@ -63,23 +65,14 @@ function getLatestAuctions(object $pdo){
     return $data;
 }
 
-function get_seller_name(object $pdo, $userID)
+//zwraca nazwę użytkownika na podstawie jego ID
+function get_user_name(object $pdo, $userID)
 {
-    $query = "SELECT username FROM users WHERE id = :userID";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
-    $stmt->execute();
-    $seller_name = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo $seller_name['username'];
-}
-
-function get_auctioneer_name(object $pdo, $auctioneerID)
-{
-    if($auctioneerID!=null)
+    if($userID!=null)
     {
-        $query = "SELECT username FROM users WHERE id = :auctioneerID";
+        $query = "SELECT username FROM users WHERE id = :userID";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':auctioneerID', $auctioneerID, PDO::PARAM_INT);
+        $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
         $stmt->execute();
         $seller_name = $stmt->fetch(PDO::FETCH_ASSOC);
         echo $seller_name['username'];

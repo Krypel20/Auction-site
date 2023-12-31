@@ -65,9 +65,9 @@
                                 <p class="description"><?php echo $auction['description'] ?></p>
                     </a>
                                 <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?> zł</p>
-                                <p class="sellerName">Sprzedawany przez: <a id='seller_name'><?php get_seller_name($pdo, $auction['userID']); ?> </a></p></br>
+                                <p class="sellerName">Sprzedawany przez: <a id='seller_name'><?php get_user_name($pdo, $auction['userID']); ?> </a></p></br>
                                 <p class="currentPrice" data-auction-id="<?php echo $auctionId; ?>">Aktualna cena: <?php echo $auction['currentPrice'] ?> zł</p>
-                                <p class="auctioneerName">Licytowany przez: <a id='auctioneer_name' data-auction-id="<?php echo $auctionId; ?>"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]);?> </a></p>
+                                <p class="auctioneerName">Licytowany przez: <a id='auctioneer_name' data-auction-id="<?php echo $auctionId; ?>"><?php get_user_name($pdo, $auction["auctioneerID"]);?> </a></p>
                                 
                                 <?php 
                                     if (isset($_SESSION["user_id"]) && $auction['status']!='Closed'){ ?>
@@ -92,9 +92,9 @@
                                 if($auction['status']=='Closed') {?>
                                 <div class='fog' style="display: flex;" data-auction-id="<?php echo $auctionId; ?>"></div>
                                     <div class="auction-closed">
-                                        <p class="auction-ended">Aukcja zakończona <?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
+                                        <p class="auction-ended">Aukcja zakończona dnia<?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
                                         <p class="sold">Kupiono za <a style="color: red;"><?php echo $auction['currentPrice']?> zł</a><br>
-                                        przez <a style="color: #00D100;"><?php get_auctioneer_name($pdo, $auction['auctioneerID'] )?></a></p>
+                                        przez <a style="color: #00D100;"><?php get_user_name($pdo, $auction['auctioneerID'] )?></a></p>
                                     </div>
                             <?php }else {?>
                                 <div class='fog' style="display: none;" data-auction-id="<?php echo $auctionId; ?>"></div>

@@ -21,7 +21,7 @@ function updateData(auctionId) {
                 currentPriceElement.textContent = `Aktualna cena: ${currentPrice} zł`;
             }  
 
-            // Aktualizacja nazwy uzytkownika licytującego dana aukcje
+            // Aktualizacja nazwy uzytkownika licytującego daną aukcję
             const auctioneerNameElement = document.querySelector(`#auctioneer_name[data-auction-id="${auctionId}"]`);
             if (auctioneerNameElement) {
                 

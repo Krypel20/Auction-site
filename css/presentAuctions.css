@@ -52,6 +52,11 @@ main .auction{
     margin-right: 25px;
     font-size: 16px;
     transition: 0.3s;
+    max-width: 1000px;
+    position: relative;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
 }
 .fog {
     background-color: rgba(0, 0, 0, 0.5);
@@ -75,16 +80,7 @@ main .right .section-title{
     text-align: center;
     padding: 20px;
 }
-
-main .right .auction{
-    display: grid;
-    max-width: 1000px;
-    position: relative;
-    grid-template-columns: auto 1fr;
-    grid-column-gap: 50px;
-    grid-row-gap: 50px;
-}
-main .right .auction-right .categoryName{
+.auction-right .categoryName{
     display: flex;
     font-size: 14px;
     margin: 0;
@@ -98,7 +94,7 @@ main .right .auction-right .categoryName{
     color: rgb(0, 0, 0);
     font-size: 16px;
 }
-main .right .auction-left .timer{
+.auction-left .timer{
     font-size: 16px;
     margin-right: 10px;
     color: darkred;
@@ -106,7 +102,7 @@ main .right .auction-left .timer{
     display: inline-block;
     font-weight:bold;
 }
-main .right .auctionName{
+.auctionName{
     display: flex;
     font-weight: bold;
     font-size: 18px;
@@ -123,27 +119,27 @@ main .right .auctionName{
     outline: 1px grey solid;
     object-fit: cover;
 }
-.right .auction .auction-left .picture img::before {
+.auction .picture img::before {
     content: '';
     display: block;
     min-width: 350px;
     min-height: 250px;
     background-color: #000000; 
 }
-main .right .auction-right .currentPrice{
+.auction-right .currentPrice{
     display: inline-block;
     color: darkred;
     font-size: 16px;
     margin-top: 0px;
     font-weight: bold;
 }
-main .right .auction-right .askingPrice{
+.auction-right .askingPrice{
     display: inline-block;
     color: rgb(90, 90, 90);
     font-size: 15px;
     font-weight: bold;
 }
-main .right .auction-right #name{
+.auction-right #name{
     font-weight: bold;
 }
 .auctioneerName, .sellerName{

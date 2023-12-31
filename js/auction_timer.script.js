@@ -1,6 +1,6 @@
 // Funkcja do aktualizacji licznika
 function updateCountdownTimers(endDate) {
-    const timers = document.querySelectorAll('.timer');
+    const timer = document.querySelectorAll('.timer');
     const endTime = new Date(endDate).getTime();
     const now = new Date().getTime();
     const timeDifference = endTime - now;
@@ -8,13 +8,12 @@ function updateCountdownTimers(endDate) {
     if (endTime >= now) {
         // Obliczanie pozostałego czasu
         const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+        const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+        const seconds = Math.floor((timeDifference / 1000) % 60);
 
         // Aktualizacja zawartości elementu .timer
-        timers.forEach((timer) => {
-            // Sprawdź warunki dla dni, godzin, minut i sekund
+        timer.forEach((timer) => {
             let displayRemainingTime = "Pozostało ";
         
             if (days > 0) {
@@ -30,12 +29,9 @@ function updateCountdownTimers(endDate) {
             }
         
             displayRemainingTime += `${seconds}s`;
-        
             timer.innerHTML = displayRemainingTime;
         });
     } else {
-        timers.forEach((timer) => {
-            timer.innerHTML = `-`;
-        });
+        timer.innerHTML = `-`;
     }
 }

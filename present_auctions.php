@@ -60,9 +60,9 @@
                                 <p class="description"><?php echo $auction['description'] ?></p>
                     </a>
                                 <p class="askingPrice">Cena wywoławcza: <?php echo $auction['askingPrice'] ?> zł</p>
-                                <p class="sellerName">Sprzedawany przez: <a id='seller_name'><?php get_seller_name($pdo, $auction['userID']); ?> </a></p><br>
+                                <p class="sellerName">Sprzedawany przez: <a id='seller_name'><?php get_user_name($pdo, $auction['userID']); ?> </a></p><br>
                                 <p class="currentPrice" data-auction-id="<?php echo $auctionId; ?>">Aktualna cena: <?php echo $auction['currentPrice'] ?> zł</p>
-                                <p class="auctioneerName">Licytowany przez: <a id='auctioneer_name' data-auction-id="<?php echo $auctionId; ?>"><?php get_auctioneer_name($pdo, $auction["auctioneerID"]);?> </a></p>
+                                <p class="auctioneerName">Licytowany przez: <a id='auctioneer_name' data-auction-id="<?php echo $auctionId; ?>"><?php get_user_name($pdo, $auction["auctioneerID"]);?> </a></p>
                                 <?php 
                                     if (isset($_SESSION["user_id"])){ ?>
                                         <div class='bid-box'>

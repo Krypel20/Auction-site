@@ -20,7 +20,7 @@ function is_email_wrong(bool|array $result)
     }
 }
 
-function is_password_wrong(string $pwd, string$hashedPwd)
+function is_password_wrong(string $pwd, string $hashedPwd)
 {
     if(!password_verify($pwd, $hashedPwd)){
         return true;

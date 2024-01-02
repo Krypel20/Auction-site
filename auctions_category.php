@@ -89,10 +89,10 @@
                             </div>
 
                             <?php 
-                                if($auction['status']=='Closed') {?>
+                                if($auction['status']=='Closed' || $currentTimestamp > $auction['endDate']) {?>
                                 <div class='fog' style="display: flex;" data-auction-id="<?php echo $auctionId; ?>"></div>
                                     <div class="auction-closed">
-                                        <p class="auction-ended">Aukcja zakończona dnia<?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
+                                        <p class="auction-ended">Aukcja zakończona dnia <?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
                                         <p class="sold">Kupiono za <a style="color: red;"><?php echo $auction['currentPrice']?> zł</a><br>
                                         przez <a style="color: #00D100;"><?php get_user_name($pdo, $auction['auctioneerID'] )?></a></p>
                                     </div>

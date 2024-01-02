@@ -14,10 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(is_input_empty($pwd, $email)){
             $errors["empty_input"] = "Wypełnij wszystkie pola";
         }
-        // if(!is_email_registered($pdo, $username) && !is_input_empty($username, $pwd, $email)){
-        //     $errors["email_unregistered"] = "Wybrany email jest nie zarejestrowany";
-        // }
-
+        
         $result = get_user($pdo, $email);
 
         if(is_email_wrong($result)){

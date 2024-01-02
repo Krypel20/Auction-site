@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var currentMessageBox = document.querySelector(".message-box[data-auction-id='" + auctionId + "']");
             var currentFog = document.querySelector(".fog[data-auction-id='" + auctionId + "']");
             var errorMessageBox = document.querySelector(".error-message-box[data-auction-id='" + auctionId + "']");
-
+            
             if (currentMessageBox) {
                 currentMessageBox.style.display = "block";
                 currentFog.style.display = 'flex';
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
-
+                        console.log(JSON.stringify(data))
                         // Wyświetlanie błędów
                         if (data.error && !data.success) {
                             currentMessageBox.style.display = "none";

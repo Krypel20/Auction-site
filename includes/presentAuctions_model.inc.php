@@ -82,11 +82,12 @@ function get_user_name(object $pdo, $userID)
     }
 }
 
+//ustawia status aukcji na 'zamknięta'
 function closeAuction(object $pdo, $auctionID)
 {
     $newStatus = 'Closed';
     try {
-        $query = "UPDATE auctions SET status = :newStatus WHERE auctionID = :auctionID";
+        $query = "UPDATE auctions SET status = :newStatus WHERE auctionID = :auctionID AND endDate <= CURRENT_TIMESTAMP ";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':auctionID', $auctionID);
         $stmt->bindParam(':newStatus', $newStatus);

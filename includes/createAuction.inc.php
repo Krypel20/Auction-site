@@ -1,53 +1,61 @@
 <?php
+
+// Inicjalizacja tablicy na ewentualne błędy walidacji
 $errors = [];
 
-if (isset($_POST['submit'])){
-    
-}
-
+// Sprawdzenie, czy dane zostały przesłane za pomocą metody POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //upload danych aukcji
+
+    // Pobranie danych aukcji
     $itemName = $_POST["itemName"];
     $description = $_POST["description"];
     $endDate = $_POST["end_date"];
     $category = $_POST["category"];
     $askingPrice = $_POST["asking_price"];
 
-    //Upload zdjecia aukcji
+    // Pobranie danych o przesłanym zdjęciu aukcji
     $image = $_FILES['file'];
     $imageName = $_FILES['file']['name'];
     $imageTmpName = $_FILES['file']['tmp_name'];
-    $imageSize = $_FILES['file']['size'];
+    $imageSize = $_FILES['file']['size']; // Rozmiar zdjęcia
     $imageError = $_FILES['file']['error'];
     $imageType = $_FILES['file']['type'];
 
+    // Podział nazwy pliku na rozszerzenie
     $imageExt = explode('.', $imageName);
     $imageActualExt = strtolower(end($imageExt));
 
+    // Dozwolone rozszerzenia plików
     $allowed = array('jpg', 'jpeg', 'png');
 
-    if(in_array($imageActualExt, $allowed)){
-        if($imageError === 0){
-            if($imageSize < 2000000){
-                $imageNameNew = $imageName.uniqid('', true).".". $imageActualExt;
-                $imageDestination = "../uploads/".$imageNameNew; //lokalizacja folderu ze zdjęciami aukcji na serwerze
-                echo "Poprawnie załadowano zdjęcie";    
-            }
-            else{
+    // Sprawdzenie, czy przesłane zdjęcie ma dozwolone rozszerzenie
+    if (in_array($imageActualExt, $allowed)) {
+        // Sprawdzenie, czy podczas przesyłania nie wystąpiły błędy
+        if ($imageError === 0) {
+            // Sprawdzenie, czy rozmiar przesłanego zdjęcia nie przekracza 2 MB
+            if ($imageSize <= 2000000) {
+                // Przygotowanie unikalnej nazwy pliku
+                $imageNewName = $imageName . uniqid('', true) . "." . $imageActualExt;
+                // Lokalizacja docelowa na serwerze dla zapisanego zdjęcia
+                $imageDestination = "../uploads/" . $imageNewName;
+                echo "Poprawnie załadowano zdjęcie";
+            } else {
                 echo "Za duży rozmiar zdjęcia";
                 $errors['image_too_big'] = "Za duży rozmiar zdjęcia";
             }
         } else {
-            echo "Bład podczas wczytywania zdjęcia";
+            echo "Błąd podczas wczytywania zdjęcia";
             $errors['image_upload_error'] = "Błąd podczas wczytywania zdjęcia";
         }
-    }else{
+    } else {
         echo "Zdjęcie powinno mieć rozszerzenie .png/.jpg/.jpeg";
         $errors['image_type_error'] = "Zdjęcie powinno mieć rozszerzenie .png/.jpg/.jpeg";
     }
 
-    $picture = $imageNameNew;
+    // Przypisanie nazwy zapisanego zdjęcia do zmiennej
+    $picture = $imageNewName;
 
+    // Walidacja pól formularza aukcji
     if (empty($itemName)) {
         $errors['missing_item_name'] = "Pole Nazwa przedmiotu jest wymagane.";
     }
@@ -68,8 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['missing_asking_price'] = "Pole Cena wywoławcza jest wymagane.";
     }
 
-    if($errors){
-        $_SESSION["auction_create_errors"] = $errors; 
+    // Jeśli wystąpiły błędy walidacji, przekieruj na stronę z informacją o błędzie
+    if ($errors) {
+        $_SESSION["auction_create_errors"] = $errors;
         header("Location: ../create_auction.php?create=error");
         exit();
     }
@@ -79,8 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once 'createAuction_model.inc.php';
         require_once "config_session.inc.php";
 
-        create_auction($pdo, $itemName, $description, $endDate, $askingPrice, $picture, $category); 
-        move_uploaded_file($imageTmpName, $imageDestination); //przeniesienie zdjęcia na serwer 
+        // Utworzenie aukcji w bazie danych
+        set_auction($pdo, $itemName, $description, $endDate, $askingPrice, $picture, $category);
+
+        // Przeniesienie przesłanego zdjęcia na serwer
+        move_uploaded_file($imageTmpName, $imageDestination);
+
         header("Location: ../create_auction.php?create=success");
 
         $pdo = null;
@@ -88,9 +101,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die();
 
     } catch (PDOException $e) {
+        // Obsługa błędów związanych z bazą danych
         die("Query failed: " . $e->getMessage());
-    }    
-} else { 
+    }
+} else {
+    // Przekierowanie w przypadku braku danych POST
     header("Location: ../create_auction.php");
     exit();
 }

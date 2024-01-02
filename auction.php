@@ -38,7 +38,7 @@
             <?php echo "<h1>Aukcja nr " . $id . "</h1>";?> 
         </div>
     </header>
-<?php if($auction){ ?>
+<?php if($auction){?>
     <div class="container">
 <main>
         <div class="left">
@@ -89,7 +89,7 @@
                     if($auction['status']=='Closed') {?>
                     <div class='fog' style="display: flex;" data-auction-id="<?php echo $id; ?>"></div>
                         <div class="auction-closed">
-                            <p class="auction-ended">Aukcja zakończona dnia<?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
+                            <p class="auction-ended">Aukcja zakończona dnia <?php echo date('d.m.Y H:i', $auctionEndDateTimestamp); ?> </p>
                             <p class="sold">Kupiono za <a style="color: red;"><?php echo $auction['currentPrice']?> zł</a><br>
                             przez <a style="color: #00D100;"><?php get_user_name($pdo, $auction['auctioneerID'] )?></a></p>
                         </div>

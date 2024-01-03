@@ -34,7 +34,7 @@ function updateCountdownTimers(endDates) {
             // Aktualizacja zawartości elementu .timer
             timer.innerHTML = displayRemainingTime;
         } else {
-            timer.innerHTML = `-`;
+            timer.innerHTML = `Zakończona`;
         }
     });
 }

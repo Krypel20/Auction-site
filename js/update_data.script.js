@@ -25,7 +25,7 @@ function updateData(auctionId) {
             const auctioneerNameElement = document.querySelector(`#auctioneer_name[data-auction-id="${auctionId}"]`);
             if (auctioneerNameElement) {
                 
-                if(auctioneerName=='') auctioneerNameElement.textContent = `-`;
+                if(auctioneerName=='') auctioneerNameElement.textContent = `Zakończona`;
                 else auctioneerNameElement.textContent = ` ${auctioneerName}`;
             }
         }

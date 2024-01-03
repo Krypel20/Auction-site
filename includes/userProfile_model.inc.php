@@ -17,7 +17,7 @@ function is_user_logged_in()
 }
 
 function getAucitonsCreatedByUser(object $pdo, $userId){
-    $query = "SELECT * FROM auctions WHERE userID = ? ORDER BY endDate";
+    $query = "SELECT * FROM auctions WHERE userID = ? ORDER BY (endDate >= CURRENT_TIMESTAMP) DESC, endDate >= CURRENT_TIMESTAMP, endDate";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(1, $userId, PDO::PARAM_INT);
     $stmt->execute();

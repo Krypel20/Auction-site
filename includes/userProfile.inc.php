@@ -42,3 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../userProfile.php");
     exit();
 }
+
+function editUSerPassword(object $pdo, $userID, $pwd){
+    
+}

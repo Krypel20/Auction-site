@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     var bidButtons = document.querySelectorAll(".bid-button");
-    var isButtonDisabled = false;
 
-    bidButtons.forEach(function (button, index) {
+    bidButtons.forEach(function (button) {
 
         button.addEventListener("click", function () {
             var auctionId = button.getAttribute("data-auction-id");

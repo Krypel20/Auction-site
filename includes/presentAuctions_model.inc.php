@@ -52,10 +52,10 @@ function getCategories(object $pdo)
     return $categories;
 }
 
-//wyciąga dane aukcji ostatnio utworzonych
+//wyciąga dane aukcji z najbliższym czasem zakończenia
 function getLatestAuctions(object $pdo){
 
-    $query = "SELECT * FROM auctions WHERE endDate >= CURRENT_TIMESTAMP ORDER BY endDate LIMIT 20";
+    $query = "SELECT * FROM auctions WHERE endDate >= CURRENT_TIMESTAMP ORDER BY endDate";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

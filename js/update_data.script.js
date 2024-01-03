@@ -3,7 +3,7 @@ function updateData(auctionId) {
     let currentPrice;
     let auctioneerName;
 
-    // Wysyłanie zapytania AJAX do serwera
+    // Wysyłanie zapytania AJAX do serwera wykorzystując plik PHP getCurrentData.inc.php
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `includes/getCurrentData.inc.php?id=${auctionId}`, true);
 

@@ -102,6 +102,7 @@
 const auctionIds = <?php echo json_encode(array_column($auctions, 'auctionID')); ?>;
 
 // Uruchom funkcję aktualizacji dla każdego identyfikatora co 1 sekunde
+// Uruchom funkcję aktualizacji dla każdego identyfikatora co 1 sekunde
 auctionIds.forEach(auctionId => {
     setInterval(() => updateData(auctionId), 1000);
 });
@@ -112,6 +113,7 @@ const auctionEndDates = <?php echo json_encode(array_column($auctions, 'endDate'
 // Uruchom funkcję aktualizacji liczników na podstawie pobranych dat
 updateCountdownTimers(auctionEndDates);
 
+// Uruchom funkcję aktualizacji co 1 sekunde
 // Uruchom funkcję aktualizacji co 1 sekunde
 setInterval(() => updateCountdownTimers(auctionEndDates), 1000);
 </script>

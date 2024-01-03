@@ -16,6 +16,7 @@ function is_user_logged_in()
     }
 }
 
+//Zwrócenie wszystkich aukcji stworzonych przez uzytkownika 
 function getAucitonsCreatedByUser(object $pdo, $userId){
     $query = "SELECT * FROM auctions WHERE userID = ? ORDER BY (endDate >= CURRENT_TIMESTAMP) DESC, endDate >= CURRENT_TIMESTAMP, endDate";
     $stmt = $pdo->prepare($query);
@@ -29,6 +30,7 @@ function getAucitonsCreatedByUser(object $pdo, $userId){
     return $data;
 }
 
+//Zwrócenie wszystkich aukcji które użytkownik licytuje
 function getAucitonsLicitByUser(object $pdo, $userId){
     $query = "SELECT * FROM auctions WHERE auctioneerID = ? ORDER BY endDate";
     $stmt = $pdo->prepare($query);

@@ -13,11 +13,10 @@ if (isset($_GET['id'])) {
 
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Pobranie nazwy licytującego uzytkownika
     $auctioneerID = $result['auctioneerID'];
     $auctioneerName = '';
 
-    if ($auctioneerID !== null) {
+    if ($auctioneerID !== null) {     // Pobranie nazwy licytującego uzytkownika
         $auctioneerQuery = "SELECT username FROM users WHERE id = :auctioneerID";
         $auctioneerStmt = $pdo->prepare($auctioneerQuery);
         $auctioneerStmt->bindParam(':auctioneerID', $auctioneerID, PDO::PARAM_INT);
@@ -26,7 +25,6 @@ if (isset($_GET['id'])) {
         $auctioneerName = $auctioneerResult ? $auctioneerResult['username'] : '';
     }
 
-    // sprawdzenie błędów
     echo json_encode(['result' => $result, 'auctioneerName' => $auctioneerName, 'query' => $query, 'auctionId' => $auctionId]);
 } else {
     echo json_encode(['error' => 'Brak identyfikatora aukcji']);

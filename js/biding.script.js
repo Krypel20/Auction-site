@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         } else {
                             // Licytacja udana
                             if (data.success) {
-                                console.log(data.success);
                                 currentFog.style.display = 'none';
                                 currentMessageBox.style.display = "none";
                                 return 0;

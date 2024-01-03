@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-//funkcje odpowiedzialne za kontrolę formularza
+//funkcje logiczne odpowiedzialne za kontrolę formularza zwracające true/false
+
 function is_input_empty(string $username, string $pwd, string $email)
 {
     if(empty($username) || empty($pwd) || empty($email)){

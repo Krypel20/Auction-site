@@ -120,7 +120,6 @@ auctionIds.forEach(auctionId => {
     setInterval(() => updateData(auctionId), 1000);
 });
 
-
 // Pobierz daty zakończenia aukcji z PHP
 const auctionEndDates = <?php echo json_encode(array_column($auctions, 'endDate')); ?>;
 

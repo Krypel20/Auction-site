@@ -39,7 +39,7 @@ function getAuctionsByCategory(object $pdo, $category)
     return $data;
 }
 
-//wyciąga wszystkie kategorie aukcji znajdujacych się w tabeli aukcji 
+//wyciąga kategorie jakie posiadają wszystkie aukcje w bazie danych
 function getCategories(object $pdo)
 {
     $query = "SELECT DISTINCT category FROM auctions ORDER BY category";

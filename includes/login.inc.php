@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die();
         }
         
+        //utworzenie id sesji i przypisanie spersonalizowanego ID dla uzytkownika
         $newSessionId = session_create_id();
         $sessionId = $newSessionId . "_" . $result["id"];
         session_id($sessionId);

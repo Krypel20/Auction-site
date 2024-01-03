@@ -32,6 +32,6 @@ function updateCountdownTimers(endDate) {
             timer.innerHTML = displayRemainingTime;
         });
     } else {
-        timer.innerHTML = `-`;
+        timer.innerHTML = `Zakończona`;
     }
 }

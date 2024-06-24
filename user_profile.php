@@ -114,11 +114,7 @@
     });
     // Pobierz daty zakończenia aukcji z PHP
     const auctionEndDates = <?php echo json_encode(array_column($allAuctions, 'endDate')); ?>;
-
-    // Uruchom funkcję aktualizacji liczników na podstawie pobranych dat    
     updateCountdownTimers(auctionEndDates);
-
-    // Uruchom funkcję aktualizacji co 5 sekund
     setInterval(() => updateCountdownTimers(auctionEndDates), 1000);
 </script>
 <footer>

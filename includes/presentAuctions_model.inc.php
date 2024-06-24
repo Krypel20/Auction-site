@@ -54,15 +54,16 @@ function getCategories(object $pdo)
 
 //wyciąga dane aukcji z najbliższym czasem zakończenia
 function getLatestAuctions(object $pdo){
-
     $query = "SELECT * FROM auctions WHERE endDate >= CURRENT_TIMESTAMP ORDER BY endDate";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
-
+    $data = [];
+    
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         $data[] = $row;
     }
-    return $data;
+    if($data) return $data;
+    else return;
 }
 
 //zwraca nazwę użytkownika na podstawie jego ID
